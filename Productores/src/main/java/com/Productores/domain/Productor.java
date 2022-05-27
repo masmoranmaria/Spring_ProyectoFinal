@@ -1,7 +1,5 @@
 package com.Productores.domain;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
 public class Productor {
 	
 	private String id;
