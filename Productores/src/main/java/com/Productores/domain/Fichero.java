@@ -1,10 +1,14 @@
 package com.Productores.domain;
 
+
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document(collection = "fichero")
 public class Fichero {
 
+	@Id
+	private String id;
 	private String FechaCreacion;
 	private String titulo;
 	private String descripcion;
@@ -13,6 +17,7 @@ public class Fichero {
 	private String tamanyo;
 	private String numPrev;
 	private String numDesc;
+	private String contenido;
 	
 	public Fichero() {}
 	
@@ -89,6 +94,14 @@ public class Fichero {
 
 	public void setNumDesc(String numDesc) {
 		this.numDesc = numDesc;
+	}
+
+	public String getContenido() {
+		return contenido;
+	}
+
+	public void setContenido(String contenido) {
+		this.contenido = contenido;
 	}
 	
 	

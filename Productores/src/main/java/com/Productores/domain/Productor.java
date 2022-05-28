@@ -1,5 +1,6 @@
 package com.Productores.domain;
 
+
 public class Productor {
 	
 	private String id;
