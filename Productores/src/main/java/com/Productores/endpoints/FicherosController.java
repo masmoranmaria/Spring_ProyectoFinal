@@ -1,9 +1,6 @@
 package com.Productores.endpoints;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +20,6 @@ import com.Productores.services.FicherosService;
 import com.google.gson.Gson;
 
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping(value="/api/ficheros", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -63,5 +59,5 @@ public class FicherosController {
 		return ficherosService.updateFichero(titulo, fichero);
 		
 	}
-	 
+	
 }
