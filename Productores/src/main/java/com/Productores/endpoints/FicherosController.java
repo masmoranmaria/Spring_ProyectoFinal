@@ -52,8 +52,8 @@ public class FicherosController {
     }
 	
 	@GetMapping
-	public ResponseEntity<Flux<Fichero>> getAllFicheros() {
-		return new ResponseEntity<>(ficherosService.getAll(), HttpStatus.OK);
+	public ResponseEntity<Flux<Fichero>> getAllActive() {
+		return new ResponseEntity<>(ficherosService.getAllActive(), HttpStatus.OK);
 	}
 
 	 

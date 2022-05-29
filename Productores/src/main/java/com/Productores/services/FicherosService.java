@@ -21,7 +21,7 @@ public class FicherosService {
 		return entity;
 	}
 	
-	public Flux<Fichero> getAll() {
-		return ficheroRepository.findAll();
+	public Flux<Fichero> getAllActive() {
+		return ficheroRepository.findAllActive();
 	}
 }
