@@ -12,6 +12,7 @@ import reactor.core.publisher.Mono;
 @Repository
 public interface FicherosRepository extends ReactiveMongoRepository<Fichero, String> {
 	
+	@Query("{'estado' : 'activo', 'titulo' : ?0}")
 	Mono<Fichero> findByTitulo(String titulo);
 	
 	@Query("{'estado' : 'activo'}")
