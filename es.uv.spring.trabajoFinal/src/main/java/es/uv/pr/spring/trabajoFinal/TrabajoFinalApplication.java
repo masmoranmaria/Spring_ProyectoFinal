@@ -24,7 +24,7 @@ import es.uv.pr.trabajoFinal.Validador;
 
 @SpringBootApplication
 @EntityScan("es.uv.pr.trabajoFinal")
-public class TrabajoFinalApplication implements CommandLineRunner {
+public class TrabajoFinalApplication { // implements CommandLineRunner {
 
 	@Autowired
 	private ProductoresRepository productoresRepository;
@@ -35,23 +35,21 @@ public class TrabajoFinalApplication implements CommandLineRunner {
 	@Autowired
 	private TrabajosRepository trabajosRepository;
 
-	// @Autowired
-	// private ProjectAPI api;
 
 	public static void main(String[] args) {
 		SpringApplication.run(TrabajoFinalApplication.class, args);
 	}
-
-	@SuppressWarnings("unused")
-	@Override
-	public void run(String... strings) throws Exception {
-
-		// Llamamos al metodo que nos cerará las instancias de prueba de la BD
-		generateProductores(3);
-		generateValidadores(3);
-		generateTrabajos(3);
-		System.exit(0);
-	}
+//
+//	@SuppressWarnings("unused")
+//	@Override
+//	public void run(String... strings) throws Exception {
+//
+//		// Llamamos al metodo que nos cerará las instancias de prueba de la BD
+//		//generateProductores(3);
+//		//generateValidadores(3);
+//		//generateTrabajos(3);
+//		//System.exit(0);
+//	}
 
 	public String randomString(int length) {
 		int leftLimit = 97; // letter 'a'

@@ -29,7 +29,7 @@ public class ProductorService {
 	 * validador) y sin cuota anual asignada. No se requerirá autenticación.
 	 */
 
-	Productor registrarProductor(Productor p) {
+	public Productor registrarProductor(Productor p) {
 		
 		return this.pr.save(p);
 		
@@ -40,7 +40,7 @@ public class ProductorService {
 //	filtros: solo pendientes de aprobación, solo los que haya consumido su cuota anual o
 //	solo los que tengan algún fichero erróneo. Requerirá autenticación.
 	
-	List<Productor> getProductores() {
+	public List<Productor> getProductores() {
 		return this.pr.findAll();
 	}
 	
@@ -68,7 +68,7 @@ public class ProductorService {
 	 * que su estado sea activo.
 	 */
 
-	Productor updateProductor(Productor p) {
+	public Productor updateProductor(Productor p) {
 		
 		Optional<Productor> update = this.pr.findById(p.getId());
 		if(update.isEmpty()) {

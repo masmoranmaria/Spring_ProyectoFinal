@@ -9,8 +9,6 @@ import es.uv.pr.spring.trabajoFinal.repositories.ValidadoresRepository;
 @Service
 public class ValidadoresService {
 	
-	@Autowired
-	private ValidadoresRepository vr;
 	
 	
 	
