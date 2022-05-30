@@ -1,64 +1,84 @@
 package com.Productores.domain;
 
-
 public class Productor {
-	
-	private String id;
-	private String dni;
-	private String name;
-	private String type;
+
+	private int id;
+
+	private String nombre;
+
+	private String apellidos;
+
+	private String NIF;
+
 	private String email;
+
 	private String password;
+
+	private Tipo tipo;
+
+	public enum Tipo {
+		F, J
+	}
+
+	private Estado estado;
+
+	public enum Estado {
+		P, I, A
+	}
+
+	//Cantidad de MB que puede subir en un año
+	private Double cuota;
 	
-	public Productor() {}
 	
-	public Productor(String id, String dni, String name, String type, String email, String password) {
+
+	public Productor() {
+
+	}
+
+	public Productor(int id, String nombre, String apellidos, String nIF, String email, String password, Tipo tipo,
+			Estado estado, Double cuota) {
+		super();
 		this.id = id;
-		this.dni = dni;
-		this.name = name;
-		this.type = type;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		NIF = nIF;
 		this.email = email;
 		this.password = password;
+		this.tipo = tipo;
+		this.estado = estado;
+		this.cuota = cuota;
 	}
-	
-	public Productor(String dni, String name, String type, String email, String password) {
-		this.dni = dni;
-		this.name = name;
-		this.type = type;
-		this.email = email;
-		this.password = password;
-	}
-	
-	public String getId() {
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getDni() {
-		return dni;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setDni(String dni) {
-		this.dni = dni;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
-	public String getName() {
-		return name;
+	public String getApellidos() {
+		return apellidos;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
 	}
 
-	public String getType() {
-		return type;
+	public String getNIF() {
+		return NIF;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setNIF(String nIF) {
+		NIF = nIF;
 	}
 
 	public String getEmail() {
@@ -76,5 +96,30 @@ public class Productor {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public Tipo getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public Double getCuota() {
+		return cuota;
+	}
+
+	public void setCuota(Double cuota) {
+		this.cuota = cuota;
+	}
+	
 	
 }

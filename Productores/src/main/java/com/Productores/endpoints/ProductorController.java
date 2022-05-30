@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.uv.pr.trabajoFinal.Productor;
-import es.uv.pr.trabajoFinal.ProductorService;
+import com.Productores.domain.Productor;
+
+
 
 @RestController
 @RequestMapping(value="/api/productores", produces=MediaType.APPLICATION_JSON_VALUE)
