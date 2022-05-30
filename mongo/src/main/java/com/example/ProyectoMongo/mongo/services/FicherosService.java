@@ -47,7 +47,31 @@ public class FicherosService {
 		ficheroNuevo.subscribe();
 		
 		return new ResponseEntity<>(ficheroActual, HttpStatus.OK);
-		
 	}
+	
+	public ResponseEntity<Fichero> getFicheroById(String id) {
+		Fichero fichero = ficheroRepository.findById(id).block();
+		
+		if(fichero == null)
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		
+		fichero.setNumDesc(fichero.getNumDesc() + 1);
+		
+		ficheroRepository.save(fichero).subscribe();
+		
+		return new ResponseEntity<>(fichero, HttpStatus.OK);
+	};
+	
+
+	public ResponseEntity<Fichero> getPreviewById(String id) {
+		Fichero fichero = ficheroRepository.findById(id).block();
+		
+		if(fichero == null)
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		
+		fichero.setContenido("");
+		
+		return new ResponseEntity<>(fichero, HttpStatus.OK);
+	};
 	
 }
