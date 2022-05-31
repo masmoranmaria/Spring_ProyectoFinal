@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,36 +23,27 @@ import es.uv.pr.trabajoFinal.Productor;
 @RequestMapping(value = "/api/productores", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProductorController {
 	
-	//WRAPPER PARA ENVIAR Y RECIBIR LISTAS 
-	public class ProductorList {
-		private List<Productor> productores;
-
-		public ProductorList() {
-			productores = new ArrayList<>();
-		}
-
-		// standard constructor and getter/setter
-	}
-
-//	@Autowired
-//	private ProductorService ps;
-
 	@GetMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ProductorList getProductores() {
+	public Object[] getProductores() {
 		//hacer la petición
 		System.out.println("Hola aquí llego");
 		String uri = "http://localhost:8080/repo/productores";
 		RestTemplate rt = new RestTemplate();
-		ProductorList result = rt.getForObject(uri, ProductorList.class);
+		Object[] result = rt.getForObject(uri, Object[].class);
 		return result;
 		
 	}
 
-//	@PostMapping
-//	@ResponseStatus(HttpStatus.CREATED)
-//	public Productor createProductor(@RequestBody Productor p) {
-//		return this.ps.registrarProductor(p);
-//	}
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public Productor createProductor(@RequestBody Productor p) {
+		System.out.println("Hola aquí llego");
+		String uri = "http://localhost:8080/repo/productores";
+		RestTemplate rt = new RestTemplate();
+		HttpEntity<Productor> request = new HttpEntity<>(p);
+		Productor result = rt.postForObject(uri, request,  Productor.class);
+		return result;
+	}
 
 }

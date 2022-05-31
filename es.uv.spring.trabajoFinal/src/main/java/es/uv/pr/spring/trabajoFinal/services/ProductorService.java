@@ -30,7 +30,7 @@ public class ProductorService {
 	 */
 
 	public Productor registrarProductor(Productor p) {
-		
+		System.out.print("Aquí me meto");
 		return this.pr.save(p);
 		
 	}
