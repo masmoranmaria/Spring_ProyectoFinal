@@ -1,4 +1,4 @@
-package es.uv.spring.trabajoFinal.controllers;
+package es.uv.pr.spring.trabajoFinal.controllers;
 
 import java.util.List;
 
@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
+import es.uv.pr.spring.trabajoFinal.services.ProductorService;
 import es.uv.pr.trabajoFinal.Productor;
-import es.uv.spring.trabajoFinal.services.ProductorService;
 
 @RestController
-@RequestMapping(value = "/repo/productores", produces=MediaType.APPLICATION_JSON_VALUE)
+//@RequestMapping(value = "/repo/productores", produces=MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(produces=MediaType.APPLICATION_JSON_VALUE)
 public class ProductorController {
 	
 	@Autowired 

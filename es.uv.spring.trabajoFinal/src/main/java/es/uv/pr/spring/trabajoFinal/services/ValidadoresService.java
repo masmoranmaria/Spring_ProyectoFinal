@@ -1,4 +1,4 @@
-package es.uv.spring.trabajoFinal.services;
+package es.uv.pr.spring.trabajoFinal.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package es.uv.spring.trabajoFinal.controllers;
+package es.uv.pr.spring.trabajoFinal.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +15,8 @@ import org.springframework.web.client.RestTemplate;
 
 
 import es.uv.pr.spring.trabajoFinal.repositories.ProductoresRepository;
+import es.uv.pr.spring.trabajoFinal.services.ProductorService;
 import es.uv.pr.trabajoFinal.Productor;
-import es.uv.spring.trabajoFinal.services.ProductorService;
 
 @RestController
 @RequestMapping(value = "/api/validadores", produces = MediaType.APPLICATION_JSON_VALUE)
