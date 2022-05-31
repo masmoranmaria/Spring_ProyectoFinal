@@ -86,5 +86,13 @@ public class ProductorService {
 		return update.get();
 	}
 	
+	public Productor getProductor(Integer id ) {
+		Optional<Productor> p  =  this.pr.findById(id);
+		if (p.isEmpty()) {
+			//lanzar excepciones
+			return null;
+		} else return p.get();
+	}
+	
 }
 

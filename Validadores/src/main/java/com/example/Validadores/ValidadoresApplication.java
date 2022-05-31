@@ -1,4 +1,4 @@
-package com.example.Validadores.Validadores;
+package com.example.Validadores;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
