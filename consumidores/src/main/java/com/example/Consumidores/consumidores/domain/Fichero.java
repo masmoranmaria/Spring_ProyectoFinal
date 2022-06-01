@@ -1,8 +1,4 @@
-package com.example.ProyectoMongo.mongo.domain;
-
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+package com.example.Consumidores.consumidores.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,10 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "fichero")
 public class Fichero {
 
-	@Id
 	private String id;
 	private String fechaCreacion;
 	private String titulo;
