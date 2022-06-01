@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -64,6 +65,14 @@ public class FicherosController {
 	@GetMapping("/preview/{id}")
 	public ResponseEntity<Fichero> getPreviewById(@PathVariable("id") String id) {
 		String uri = "http://localhost:8080/api/ficheros/preview/" + id;
+		RestTemplate rt = new RestTemplate();
+		
+		return rt.getForObject(uri, ResponseEntity.class);
+	}
+	
+	@GetMapping("/listadoclaves/{palabrasClave}")
+	public ResponseEntity<Fichero> getPalabrasclave(@RequestParam("palabrasClave") String palabrasClave, @RequestParam("orderby") String orderBy){
+		String uri = "http://localhost:8080/api/ficheros/listadoclaves?palabrasClave=" + palabrasClave + "&orderby=" + orderBy;
 		RestTemplate rt = new RestTemplate();
 		
 		return rt.getForObject(uri, ResponseEntity.class);

@@ -6,6 +6,7 @@ import com.example.ProyectoMongo.mongo.repositories.FicherosRepository;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -64,4 +65,32 @@ public class FicherosService {
 		return new ResponseEntity<>(fichero, HttpStatus.OK);
 	};
 	
+	public ResponseEntity<List<Fichero>> getByPalabrasClave(String palabrasClave, String orderBy) {
+		Sort sortedBy = Sort.by("fechaCreacion").descending();
+		
+		if(orderBy.equals("tamanyo"))
+			sortedBy = Sort.by("tamanyo").descending();
+		
+		if(orderBy.equals("numdesc"))
+			sortedBy = Sort.by("numDesc").descending();
+		
+		
+		return new ResponseEntity<>(ficheroRepository.findByPalabrasClave(palabrasClave, sortedBy), HttpStatus.OK);
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

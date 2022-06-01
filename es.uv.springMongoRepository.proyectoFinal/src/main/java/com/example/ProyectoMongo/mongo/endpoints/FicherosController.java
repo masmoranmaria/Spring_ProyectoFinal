@@ -2,6 +2,8 @@ package com.example.ProyectoMongo.mongo.endpoints;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.Update;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ProyectoMongo.mongo.domain.Fichero;
@@ -54,6 +57,18 @@ public class FicherosController {
 	public ResponseEntity<Fichero> getPreviewById(@PathVariable("id") String id) {
 		return ficheroService.getPreviewById(id);
 	}
+	
+	@GetMapping("/listadoclaves")
+	public ResponseEntity<List<Fichero>> getByPalabrasClave(@RequestParam String palabrasClave, @RequestParam String orderBy) {
+		return ficheroService.getByPalabrasClave(palabrasClave, orderBy);
+	}
+	
+	@GetMapping("/listadoproductor/{id}")
+	public ResponseEntity<List<Fichero>> getByProductor(@PathVariable("id") String id) {
+		
+		
+	}
+	
 }
 
 
