@@ -10,18 +10,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
 import es.uv.pr.spring.trabajoFinal.repositories.ProductoresRepository;
 import es.uv.pr.trabajoFinal.Productor;
-
+import es.uv.pr.trabajoFinal.Productor.Estado;
+import es.uv.pr.trabajoFinal.Productor.Tipo;
 
 @Service
 public class ProductorService {
-	
+
 	@Autowired
 	private ProductoresRepository pr;
-	
+
 	/*
 	 * Solicitud de registro de un nuevo productor (PF1). Se indicará NIF/CIF,
 	 * nombre completo o razón social, tipo (persona física o jurídica), e-mail y
@@ -32,19 +31,18 @@ public class ProductorService {
 	public Productor registrarProductor(Productor p) {
 		System.out.print("Aquí me meto");
 		return this.pr.save(p);
-		
+
 	}
-	
+
 //	● Obtener el listado de productores (VF1). Si no se indica ningún filtro se devolverá
 //	todo el listado de productores. Opcionalmente se pueden indicar los siguientes
 //	filtros: solo pendientes de aprobación, solo los que haya consumido su cuota anual o
 //	solo los que tengan algún fichero erróneo. Requerirá autenticación.
-	
+
 	public List<Productor> getProductores() {
 		return this.pr.findAll();
 	}
-	
-	
+
 //	List<Productor> getProductoresPendientes(){
 //		
 //		
@@ -60,7 +58,6 @@ public class ProductorService {
 //		
 //	}
 //	
-	
 
 	/*
 	 * Modificación de la información del productor (PF2). Se podrán actualizar los
@@ -69,12 +66,12 @@ public class ProductorService {
 	 */
 
 	public Productor updateProductor(Productor p) {
-		
+
 		Optional<Productor> update = this.pr.findById(p.getId());
-		if(update.isEmpty()) {
+		if (update.isEmpty()) {
 			return null;
 		}
-		
+
 		update.get().setNombre(p.getNombre());
 		update.get().setApellidos(p.getApellidos());
 		update.get().setCuota(p.getCuota());
@@ -82,17 +79,29 @@ public class ProductorService {
 		update.get().setCuota(p.getCuota());
 		update.get().setEstado(p.getEstado());
 		update.get().setTipo(p.getTipo());
-		
+
 		return update.get();
 	}
-	
-	public Productor getProductor(Integer id ) {
-		Optional<Productor> p  =  this.pr.findById(id);
-		if (p.isEmpty()) {
-			//lanzar excepciones
-			return null;
-		} else return p.get();
-	}
-	
-}
 
+	public Productor getProductor(Integer id) {
+		
+		Optional<Productor> p = this.pr.findById(id);
+		if (p.isEmpty()) {
+			// lanzar excepciones
+			return null;
+		} else
+			return p.get();
+	}
+
+	public Productor validarProductor(Integer id, Double cuota) {
+		Optional<Productor> p = this.pr.findById(id);
+		if (p.isEmpty()) {
+			// lanzar excepciones
+			return null;
+		} else {
+			p.get().setEstado(Estado.A);
+			p.get().setCuota(cuota);
+		}
+		return p.get();
+	}
+}
