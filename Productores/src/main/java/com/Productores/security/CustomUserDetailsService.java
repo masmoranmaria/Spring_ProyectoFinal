@@ -20,9 +20,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// Hacer peticion al repositorio
-		String uri = "http://localhost:8080/repo/productor/" + email;
+		System.out.println(email);
+		String uri = "http://localhost:8080/repo/productores/" + "davidnumar@uv.com";
 		RestTemplate rt = new RestTemplate();
 		Productor result = rt.getForObject(uri, Productor.class);
+		System.out.println(result.toString());
 		if (result != null) {
 			return new org.springframework.security.core.userdetails.User(result.getEmail(), result.getPassword(),
 					getEstado(result));
@@ -33,7 +35,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private static Collection<? extends GrantedAuthority> getEstado(Productor p) {
 		//Crear un array de en vez con los roles con el estado (A , I , P), solo habrá uno
 		String[] estado = new String[] { p.getEstado() };
-		System.out.println(estado);
 		Collection<GrantedAuthority> estados = AuthorityUtils.createAuthorityList(estado);
 		return estados;
 	}

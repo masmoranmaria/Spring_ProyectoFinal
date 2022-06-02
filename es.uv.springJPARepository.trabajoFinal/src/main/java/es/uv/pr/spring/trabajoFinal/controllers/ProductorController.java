@@ -47,7 +47,7 @@ public class ProductorController {
 		
 	}
 	
-	@GetMapping("{email}")
+	@GetMapping("/{email}")
 	public Productor getByEmail(@PathVariable("email") String email){
 		
 		return this.ps.getByEmail(email);

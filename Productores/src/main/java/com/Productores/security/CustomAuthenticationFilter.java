@@ -38,8 +38,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 		//campos para autenticarse
-		UsernamePasswordAuthenticationToken authtoken = new UsernamePasswordAuthenticationToken(request.getParameter("email"), 
+		System.out.println(request); 
+		UsernamePasswordAuthenticationToken authtoken = new UsernamePasswordAuthenticationToken(request.getParameter("username"), 
 																								request.getParameter("password"));
+		
 		return this.authenticationManager.authenticate(authtoken);
 	}
 
@@ -47,22 +49,22 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication auth) throws IOException, ServletException {
 		
-		Productor p = (Productor)auth.getPrincipal();
-		System.out.println(p);
+		User u = (User)auth.getPrincipal();
+		//System.out.println(u.getUsername());
 		
 		Algorithm alg = Algorithm.HMAC256(sysKey.getBytes());
 		String access_token = JWT.create()
-								 .withSubject(p.getEmail())
+								 .withSubject(u.getUsername())
 								 .withExpiresAt(new Date(System.currentTimeMillis()+10*60*1000))
 								 .withIssuer(request.getRequestURL().toString())
-								 .withClaim("estado", p.getEstado())
+								 //.withClaim("estado", u.getEstado())
 								 .sign(alg);
 		
 		String refresh_token = JWT.create()
-				 .withSubject(p.getEmail())
+				 .withSubject(u.getUsername())
 				 .withExpiresAt(new Date(System.currentTimeMillis()+60*60*1000))
 				 .withIssuer(request.getRequestURL().toString())
-				 .withClaim("estado", p.getEstado())
+				 //.withClaim("estado", p.getEstado())
 				 .sign(alg);
 		
 		response.setHeader("access_token", access_token);
