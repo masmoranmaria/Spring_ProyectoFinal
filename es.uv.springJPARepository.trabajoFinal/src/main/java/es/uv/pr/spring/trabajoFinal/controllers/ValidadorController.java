@@ -17,29 +17,48 @@ import org.springframework.web.client.RestTemplate;
 
 import es.uv.pr.spring.trabajoFinal.repositories.ProductoresRepository;
 import es.uv.pr.spring.trabajoFinal.services.ProductorService;
+import es.uv.pr.spring.trabajoFinal.services.ValidadorService;
 import es.uv.pr.trabajoFinal.Productor;
 
 @RestController
 @RequestMapping(value = "/repo/validadores", produces = MediaType.APPLICATION_JSON_VALUE)
-public class ValidadoresController {
+public class ValidadorController {
 
 	@Autowired
-	ProductorService ps;
-
+	ValidadorService vs;
+	
+	
+	
 	@GetMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public List<Productor> getProductores() {
 
-		return this.ps.getProductores();
+		return this.vs.getProductores();
 
 	}
 
 	@PostMapping("/validar/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Double validarProductor(@PathVariable("id") Integer id, @RequestBody Double c) {
-		Productor p = this.ps.validarProductor(id, c);
+		Productor p = this.vs.validarProductor(id, c);
 		return p.getCuota();
 
+	}
+	
+	@PostMapping("/{id}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Productor updateProductor(@RequestBody Productor p) {
+		 
+		return this.vs.updateProductor(p);
+		
+	}
+	
+	@GetMapping("/delete/{id}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Productor deleteProductor(@PathVariable("id") Integer id) {
+		
+		return this.vs.deleteProductor(id);
+		
 	}
 
 }

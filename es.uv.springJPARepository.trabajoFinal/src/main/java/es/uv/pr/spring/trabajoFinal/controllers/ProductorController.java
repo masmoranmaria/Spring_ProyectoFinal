@@ -38,11 +38,11 @@ public class ProductorController {
 		return p;
 	}
 
-	@PutMapping("{id}")
+	@PostMapping("/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Productor updateProductor(@RequestBody Productor p) {
-		 //Productor found = this.ps.getProductor(p.getId());
-		return this.ps.updateProductor(p);
+		 
+		return this.ps.modifyProductor(p);
 		
 	}
 	

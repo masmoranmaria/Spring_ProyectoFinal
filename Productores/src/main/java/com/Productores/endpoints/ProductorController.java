@@ -18,22 +18,10 @@ import com.Productores.domain.Productor;
 @RequestMapping(value = "/api/productores", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProductorController {
 	
-	@GetMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public Object[] getProductores() {
-		//hacer la petición
-		System.out.println("Hola aquí llego");
-		String uri = "http://localhost:8080/repo/productores";
-		RestTemplate rt = new RestTemplate();
-		Object[] result = rt.getForObject(uri, Object[].class);
-		return result;
-		
-	}
-
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Productor createProductor(@RequestBody Productor p) {
-		System.out.println("Hola aquí llego");
+		
 		String uri = "http://localhost:8080/repo/productores";
 		RestTemplate rt = new RestTemplate();
 		HttpEntity<Productor> request = new HttpEntity<>(p);
@@ -44,8 +32,8 @@ public class ProductorController {
 	@PutMapping("{id}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Productor updateProductor(@RequestBody Productor p) {
-		System.out.println("Hola aquí llego");
-		String uri = "http://localhost:8080/repo/productores";
+		
+		String uri = "http://localhost:8080/repo/productores/"+p.getId();
 		RestTemplate rt = new RestTemplate();
 		HttpEntity<Productor> request = new HttpEntity<>(p);
 		Productor result = rt.postForObject(uri, request,  Productor.class);
