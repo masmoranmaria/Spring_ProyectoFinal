@@ -32,9 +32,9 @@ public class ValidadorService {
 			return p.get();
 	}
 	
-	public Productor updateProductor(Productor p) {
+	public Productor updateProductor(Integer id , Productor p) {
 
-		Optional<Productor> update = this.pr.findById(p.getId());
+		Optional<Productor> update = this.pr.findById(id);
 		if (update.isEmpty()) {
 			return null;
 		}

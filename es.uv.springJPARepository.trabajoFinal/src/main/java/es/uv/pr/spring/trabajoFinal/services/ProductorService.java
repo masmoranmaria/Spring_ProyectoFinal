@@ -26,6 +26,16 @@ public class ProductorService {
 
 	}
 
+	public Productor getByEmail(String email) {
+		Optional<Productor> p = this.pr.findByEmail(email);
+		if (p.isEmpty()) {
+			return null;
+		} else {
+			return p.get();
+		}
+
+	}
+
 	public Productor getProductor(Integer id) {
 
 		Optional<Productor> p = this.pr.findById(id);
@@ -35,28 +45,26 @@ public class ProductorService {
 		} else
 			return p.get();
 	}
-	
-	
 
-		//	List<Productor> getProductoresPendientes(){
-		//		
-		//		
-		//	}
-		//	
-		//	List<Productor> getProductoresSinCuota(){
-		//		
-		//		
-		//	}
-		//	
-		//	List<Productor> getProductoresFicheroError(){
-		//		
-		//		
-		//	}
-		//	
+	// List<Productor> getProductoresPendientes(){
+	//
+	//
+	// }
+	//
+	// List<Productor> getProductoresSinCuota(){
+	//
+	//
+	// }
+	//
+	// List<Productor> getProductoresFicheroError(){
+	//
+	//
+	// }
+	//
 
-	public Productor modifyProductor(Productor p) {
+	public Productor modifyProductor(Integer id, Productor p) {
 
-		Optional<Productor> update = this.pr.findById(p.getId());
+		Optional<Productor> update = this.pr.findById(id);
 		if (update.isEmpty()) {
 			return null;
 		}

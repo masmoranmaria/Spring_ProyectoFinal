@@ -1,16 +1,14 @@
 package es.uv.pr.spring.trabajoFinal;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
+
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -24,7 +22,7 @@ import es.uv.pr.trabajoFinal.Validador;
 
 @SpringBootApplication
 @EntityScan("es.uv.pr.trabajoFinal")
-public class TrabajoFinalApplication { // implements CommandLineRunner {
+public class TrabajoFinalApplication { //  implements ApplicationRunner {
 
 	@Autowired
 	private ProductoresRepository productoresRepository;
@@ -39,16 +37,14 @@ public class TrabajoFinalApplication { // implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(TrabajoFinalApplication.class, args);
 	}
-//
-//	@SuppressWarnings("unused")
+
 //	@Override
-//	public void run(String... strings) throws Exception {
-//
-//		// Llamamos al metodo que nos cerará las instancias de prueba de la BD
-//		//generateProductores(3);
-//		//generateValidadores(3);
-//		//generateTrabajos(3);
-//		//System.exit(0);
+//	public void run( ApplicationArguments args ) throws Exception {
+//		//Llamamos al metodo que nos cerará las instancias de prueba de la BD
+//		generateProductores(3);
+//		generateValidadores(3);
+//		generateTrabajos(3);
+//		System.exit(0);
 //	}
 
 	public String randomString(int length) {

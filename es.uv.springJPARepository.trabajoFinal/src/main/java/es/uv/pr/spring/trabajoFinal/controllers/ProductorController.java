@@ -7,6 +7,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,9 +41,16 @@ public class ProductorController {
 
 	@PostMapping("/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Productor updateProductor(@RequestBody Productor p) {
+	public Productor updateProductor(@PathVariable("id") Integer id, @RequestBody Productor p) {
 		 
-		return this.ps.modifyProductor(p);
+		return this.ps.modifyProductor(id, p);
+		
+	}
+	
+	@GetMapping("{email}")
+	public Productor getByEmail(@PathVariable("email") String email){
+		
+		return this.ps.getByEmail(email);
 		
 	}
 	

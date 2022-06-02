@@ -47,9 +47,9 @@ public class ValidadorController {
 	
 	@PostMapping("/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Productor updateProductor(@RequestBody Productor p) {
+	public Productor updateProductor(@PathVariable("id") Integer id, @RequestBody Productor p) {
 		 
-		return this.vs.updateProductor(p);
+		return this.vs.updateProductor(id, p);
 		
 	}
 	
