@@ -1,10 +1,12 @@
 package com.example.ProyectoMongo.mongo.services;
 
 import com.example.ProyectoMongo.mongo.domain.Fichero;
+import com.example.ProyectoMongo.mongo.domain.Trabajo;
 import com.example.ProyectoMongo.mongo.repositories.FicherosRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -27,11 +29,21 @@ public class FicherosService {
 	}
 	
 	public ResponseEntity<Fichero> getByTitulo(String titulo) {
-		return new ResponseEntity<>(ficheroRepository.findByTitulo(titulo), HttpStatus.OK);
+		Optional<Fichero> fichero = ficheroRepository.findByTitulo(titulo);
+		
+		if(fichero.isEmpty())
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		return new ResponseEntity<>(fichero.get(), HttpStatus.OK);
 	}
 	
 	public ResponseEntity<Fichero> updateFichero(String titulo, Fichero fichero){
-		Fichero ficheroActual = ficheroRepository.findByTitulo(titulo);
+		Optional<Fichero> optional = ficheroRepository.findByTitulo(titulo);
+		
+		if(optional.isEmpty())
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		
+		Fichero ficheroActual = optional.get();
 		
 		if(!ficheroActual.getEstado().equals("activo"))
 			return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
@@ -75,13 +87,18 @@ public class FicherosService {
 		if(orderBy.equals("numdesc"))
 			sortedBy = Sort.by("numDesc").descending();
 		
-		
 		return new ResponseEntity<>(ficheroRepository.findByPalabrasClave(palabrasClave, sortedBy), HttpStatus.OK);
 	}
 	
-	public ResponseEntity<List<Fichero>> getByTrabajos(Trabajos[] trabajos) {
+	public ResponseEntity<List<Fichero>> getByTrabajos(Trabajo[] trabajos) {
+		ArrayList<Fichero> ficheros = new ArrayList<>();
 		
-		
+		for (Trabajo trabajo : trabajos) {
+			Optional<Fichero> fichero = ficheroRepository.findPublishedById(trabajo.getId_mongo());
+			if (!fichero.isEmpty())
+				ficheros.add(fichero.get());
+		}
+			
 		return new ResponseEntity<>(ficheros, HttpStatus.OK);
 	}
 }

@@ -2,11 +2,7 @@ package com.example.ProyectoMongo.mongo.endpoints;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.repository.Update;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.ProyectoMongo.mongo.domain.Fichero;
-import com.example.ProyectoMongo.mongo.domain.Productor;
+import com.example.ProyectoMongo.mongo.domain.Trabajo;
 import com.example.ProyectoMongo.mongo.services.FicherosService;
 
 @RestController
@@ -66,11 +63,11 @@ public class FicherosController {
 	
 	@GetMapping("/listadoproductor/{id}")
 	public ResponseEntity<List<Fichero>> getByProductor(@PathVariable("id") String id) {
-		String uri = "http://localhost:8080/api/CONSULTAPRODUCTORPORID" + titulo; // TODO
+		String uri = "http://localhost:8080/api/CONSULTAPRODUCTORPORID" + id; // TODO
 		RestTemplate rt = new RestTemplate();
-		Trabajos[] trabajos = rt.getForObject(uri, Trabajos[].class);
+		Trabajo[] trabajos = rt.getForObject(uri, Trabajo[].class);
 		
-		return ficheroService.getFicheroByTrabajos(trabajos);
+		return ficheroService.getByTrabajos(trabajos);
 	}
 	
 }

@@ -7,18 +7,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Trabajo {
+public class Validador {
 	
 	private int id;
 	
-	private String id_mongo;
+	private String nombre;
 	
-	private Productor productor;
+	private String apellidos;
 	
-	private Validador validador;
+	private String email;
 	
-	private int num_prev;
+	private String password;
 	
-	private int num_desc;
-
 }
