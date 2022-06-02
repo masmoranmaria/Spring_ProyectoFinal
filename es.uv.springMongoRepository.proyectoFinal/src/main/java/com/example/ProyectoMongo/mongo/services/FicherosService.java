@@ -3,6 +3,7 @@ package com.example.ProyectoMongo.mongo.services;
 import com.example.ProyectoMongo.mongo.domain.Fichero;
 import com.example.ProyectoMongo.mongo.repositories.FicherosRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,11 @@ public class FicherosService {
 		return new ResponseEntity<>(ficheroRepository.findByPalabrasClave(palabrasClave, sortedBy), HttpStatus.OK);
 	}
 	
+	public ResponseEntity<List<Fichero>> getByTrabajos(Trabajos[] trabajos) {
+		
+		
+		return new ResponseEntity<>(ficheros, HttpStatus.OK);
+	}
 }
 
 

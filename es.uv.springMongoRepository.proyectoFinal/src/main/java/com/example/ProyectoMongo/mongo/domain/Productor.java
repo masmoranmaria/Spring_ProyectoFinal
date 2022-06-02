@@ -25,5 +25,6 @@ public class Productor {
 
 	//Cantidad de MB que puede subir en un año
 	private Double cuota;
-	
+
+	private List<String> ficheros; 
 }

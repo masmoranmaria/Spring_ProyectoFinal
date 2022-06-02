@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ProyectoMongo.mongo.domain.Fichero;
+import com.example.ProyectoMongo.mongo.domain.Productor;
 import com.example.ProyectoMongo.mongo.services.FicherosService;
 
 @RestController
@@ -65,8 +66,11 @@ public class FicherosController {
 	
 	@GetMapping("/listadoproductor/{id}")
 	public ResponseEntity<List<Fichero>> getByProductor(@PathVariable("id") String id) {
+		String uri = "http://localhost:8080/api/CONSULTAPRODUCTORPORID" + titulo; // TODO
+		RestTemplate rt = new RestTemplate();
+		Trabajos[] trabajos = rt.getForObject(uri, Trabajos[].class);
 		
-		
+		return ficheroService.getFicheroByTrabajos(trabajos);
 	}
 	
 }
