@@ -42,7 +42,7 @@ public class TokenProvider {
 				 .withSubject(username)
 				 .withExpiresAt(new Date(System.currentTimeMillis()+this.duration))
 				 .withIssuer(this.issuer)
-				 .withClaim("roles", claims)
+				 .withClaim("estado", claims)
 				 .sign(this.algorithm);
 	}
 	
@@ -51,7 +51,7 @@ public class TokenProvider {
 				 .withSubject(username)
 				 .withExpiresAt(new Date(System.currentTimeMillis()+(this.duration*2)))
 				 .withIssuer(this.issuer)
-				 .withClaim("roles", claims)
+				 .withClaim("estado", claims)
 				 .sign(this.algorithm);
 	}
 	

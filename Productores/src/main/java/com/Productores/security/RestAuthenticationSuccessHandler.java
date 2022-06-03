@@ -34,6 +34,7 @@ public class RestAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 							          throws IOException, ServletException {
         response.setStatus(HttpServletResponse.SC_OK);
 
+
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         PrintWriter writer = response.getWriter();
         mapper.writeValue(writer, userDetails);

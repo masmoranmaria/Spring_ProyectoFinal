@@ -2,8 +2,7 @@ package com.Productores.security;
 
 import java.util.Collection;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,14 +19,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// Hacer peticion al repositorio
-		System.out.println(email);
 		String uri = "http://localhost:8080/repo/productores/" + email;
 		RestTemplate rt = new RestTemplate();
-		System.out.println("Hola");
 		Productor result = rt.getForObject(uri, Productor.class);
-		
-		System.out.println(result.toString());
 		if (result != null) {
+			System.out.println(new org.springframework.security.core.userdetails.User(result.getEmail(), result.getPassword(),
+					getEstado(result)));
 			return new org.springframework.security.core.userdetails.User(result.getEmail(), result.getPassword(),
 					getEstado(result));
 		} else { throw new UsernameNotFoundException("El productor no existe");}
