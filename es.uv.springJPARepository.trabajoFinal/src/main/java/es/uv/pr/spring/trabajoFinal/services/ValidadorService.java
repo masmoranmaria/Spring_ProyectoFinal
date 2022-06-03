@@ -6,16 +6,23 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import es.uv.pr.spring.trabajoFinal.domain.Productor;
+import es.uv.pr.spring.trabajoFinal.domain.Validador;
+import es.uv.pr.spring.trabajoFinal.domain.Productor.Estado;
 import es.uv.pr.spring.trabajoFinal.repositories.ProductoresRepository;
 import es.uv.pr.spring.trabajoFinal.repositories.ValidadoresRepository;
-import es.uv.pr.trabajoFinal.Productor;
-import es.uv.pr.trabajoFinal.Productor.Estado;
+
+
+
 
 @Service
 public class ValidadorService {
 	
 	@Autowired
 	private ProductoresRepository pr;
+	
+	@Autowired 
+	ValidadoresRepository vr;
 	
 	
 	public List<Productor> getProductores() {
@@ -68,6 +75,15 @@ public class ValidadorService {
 		} else {
 			return null;
 		}
+	}
+	
+	public Validador getByEmail ( String email) {
+		
+		Optional<Validador> v = this.vr.findByEmail(email);
+		if(v.isEmpty()) {
+			return null;
+		} else return v.get();
+		
 	}
 	
 

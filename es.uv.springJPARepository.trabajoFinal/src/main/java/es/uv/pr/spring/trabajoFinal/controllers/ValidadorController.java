@@ -1,6 +1,5 @@
 package es.uv.pr.spring.trabajoFinal.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-
-import es.uv.pr.spring.trabajoFinal.repositories.ProductoresRepository;
-import es.uv.pr.spring.trabajoFinal.services.ProductorService;
+import es.uv.pr.spring.trabajoFinal.domain.Productor;
+import es.uv.pr.spring.trabajoFinal.domain.Validador;
 import es.uv.pr.spring.trabajoFinal.services.ValidadorService;
-import es.uv.pr.trabajoFinal.Productor;
+
 
 @RestController
 @RequestMapping(value = "/repo/validadores", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -26,8 +23,6 @@ public class ValidadorController {
 
 	@Autowired
 	ValidadorService vs;
-	
-	
 	
 	@GetMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -61,4 +56,11 @@ public class ValidadorController {
 		
 	}
 
+	@GetMapping("/{email}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Validador getValidadorByEmail(@PathVariable("email") String email) {
+		
+		return this.vs.getByEmail(email);
+		
+	}
 }

@@ -1,19 +1,12 @@
 package es.uv.pr.spring.trabajoFinal.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-
+import es.uv.pr.spring.trabajoFinal.domain.Productor;
 import es.uv.pr.spring.trabajoFinal.repositories.ProductoresRepository;
-import es.uv.pr.trabajoFinal.Productor;
-import es.uv.pr.trabajoFinal.Productor.Estado;
-import es.uv.pr.trabajoFinal.Productor.Tipo;
+
 
 @Service
 public class ProductorService {

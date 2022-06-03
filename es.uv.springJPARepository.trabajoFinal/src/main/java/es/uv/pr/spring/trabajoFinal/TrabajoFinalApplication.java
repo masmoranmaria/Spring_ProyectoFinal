@@ -11,17 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
+
+import es.uv.pr.spring.trabajoFinal.domain.Productor;
+import es.uv.pr.spring.trabajoFinal.domain.Trabajo;
+import es.uv.pr.spring.trabajoFinal.domain.Validador;
 import es.uv.pr.spring.trabajoFinal.repositories.ProductoresRepository;
 import es.uv.pr.spring.trabajoFinal.repositories.TrabajosRepository;
 import es.uv.pr.spring.trabajoFinal.repositories.ValidadoresRepository;
-import es.uv.pr.trabajoFinal.Productor;
-import es.uv.pr.trabajoFinal.Trabajo;
-import es.uv.pr.trabajoFinal.Validador;
+
 
 @SpringBootApplication
-@EntityScan("es.uv.pr.trabajoFinal")
 public class TrabajoFinalApplication { //  implements ApplicationRunner {
 
 	@Autowired
@@ -125,10 +125,7 @@ public class TrabajoFinalApplication { //  implements ApplicationRunner {
 			int randomApellido1 = rand.nextInt(apellidos.length);
 			int randomApellido2 = rand.nextInt(apellidos.length);
 			int randomEmail = rand.nextInt(emails.length);
-			String randomNIF = Integer.toString(new Random().nextInt((99999999 - 11111111) + 1) + 11111111)
-					+ randomString(1).toUpperCase();
-			// System.out.println(randomNIF);
-
+			
 			v.setNombre(nombres[randomNombre]);
 			v.setApellidos(apellidos[randomApellido1] + " " + apellidos[randomApellido2]);
 			v.setEmail(emails[randomEmail]);
@@ -144,8 +141,6 @@ public class TrabajoFinalApplication { //  implements ApplicationRunner {
 	}
 
 	public void generateTrabajos(int numTrab) {
-
-		Random rand = new Random(); // instance of random class
 
 		ArrayList<Trabajo> trabajos = new ArrayList<Trabajo>();
 

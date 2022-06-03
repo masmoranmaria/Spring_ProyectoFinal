@@ -1,11 +1,10 @@
 package es.uv.pr.spring.trabajoFinal.repositories;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import es.uv.pr.trabajoFinal.Productor;
-import es.uv.pr.trabajoFinal.Trabajo;
+import es.uv.pr.spring.trabajoFinal.domain.Trabajo;
+
+
 
 public interface TrabajosRepository extends JpaRepository<Trabajo, Integer> {
 	
