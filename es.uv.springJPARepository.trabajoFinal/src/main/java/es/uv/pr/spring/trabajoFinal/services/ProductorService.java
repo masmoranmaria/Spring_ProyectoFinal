@@ -76,7 +76,7 @@ public class ProductorService {
 		update.get().setNIF(p.getNIF());
 		update.get().setTipo(p.getTipo());
 
-		this.pr.save(update.get());
+		//this.pr.save(update.get());
 		return update.get();
 	}
 

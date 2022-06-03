@@ -48,7 +48,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		// campos para autenticarse
 		UsernamePasswordAuthenticationToken authtoken = new UsernamePasswordAuthenticationToken(
 				request.getParameter("username"), request.getParameter("password"));
-		System.out.println(authtoken);
+		
 		return this.authenticationManager.authenticate(authtoken);
 	}
 
@@ -56,13 +56,13 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication auth) throws IOException, ServletException {
 
-		System.out.println("Hola desde succesfulAuth");
+		
 		User u = (User) auth.getPrincipal();
-		System.out.println("Hola desde succesfulAuth" + u.getUsername());
+	
 		Algorithm alg = Algorithm.HMAC256(sysKey.getBytes());
-		// EMPLEANDO CLASE TOKEN PROVIDER
+		// EMPLEANDO CLASE TOKEN PROVIDER DA NULL 
 		System.out.println(this.tp);
-
+		
 		String access_token = JWT.create().withSubject(u.getUsername())
 				.withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
 				.withIssuer(request.getRequestURL().toString())

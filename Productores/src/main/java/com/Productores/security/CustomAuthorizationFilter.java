@@ -37,17 +37,17 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 		}
 		else {
-			System.out.println("Hola");
+			
 			String authHeader = request.getHeader(AUTHORIZATION);
 			if(authHeader != null && authHeader.startsWith("Bearer ")) {
 				try {
 					String token = authHeader.substring("Bearer ".length());
-					//System.out.println(token);
+					
 					Algorithm alg = Algorithm.HMAC256(sysKey.getBytes());
 					JWTVerifier verifier = JWT.require(alg).build();
 					DecodedJWT decoded = verifier.verify(token);
 					String username = decoded.getSubject();
-					//System.out.println(username);
+					
 					String[] roles = decoded.getClaim("estados").asArray(String.class);
 					Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 					for(String r : roles) { authorities.add(new SimpleGrantedAuthority(r)); }

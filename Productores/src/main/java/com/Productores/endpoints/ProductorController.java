@@ -31,6 +31,7 @@ public class ProductorController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Productor createProductor(@RequestBody Productor p) {
 
+		System.out.println("Entrando post");
 		String uri = "http://localhost:8080/repo/productores";
 		RestTemplate rt = new RestTemplate();
 		p.setPassword(new BCryptPasswordEncoder().encode(p.getPassword()));
@@ -49,7 +50,11 @@ public class ProductorController {
 
 		String uri = "http://localhost:8080/repo/productores/" + id;
 		RestTemplate rt = new RestTemplate();
+		if(p.getPassword() != "") {
+			p.setPassword(new BCryptPasswordEncoder().encode(p.getPassword()));
+		}
 		HttpEntity<Productor> request = new HttpEntity<>(p);
+		
 		Productor result = rt.postForObject(uri, request, Productor.class);
 		return result;
 	}

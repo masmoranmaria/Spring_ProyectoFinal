@@ -23,8 +23,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 		RestTemplate rt = new RestTemplate();
 		Productor result = rt.getForObject(uri, Productor.class);
 		if (result != null) {
-			System.out.println(new org.springframework.security.core.userdetails.User(result.getEmail(), result.getPassword(),
-					getEstado(result)));
 			return new org.springframework.security.core.userdetails.User(result.getEmail(), result.getPassword(),
 					getEstado(result));
 		} else { throw new UsernameNotFoundException("El productor no existe");}
