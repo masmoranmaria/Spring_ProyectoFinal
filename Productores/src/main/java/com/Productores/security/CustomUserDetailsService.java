@@ -21,9 +21,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// Hacer peticion al repositorio
 		System.out.println(email);
-		String uri = "http://localhost:8080/repo/productores/" + "davidnumar@uv.com";
+		String uri = "http://localhost:8080/repo/productores/" + email;
 		RestTemplate rt = new RestTemplate();
+		System.out.println("Hola");
 		Productor result = rt.getForObject(uri, Productor.class);
+		
 		System.out.println(result.toString());
 		if (result != null) {
 			return new org.springframework.security.core.userdetails.User(result.getEmail(), result.getPassword(),
