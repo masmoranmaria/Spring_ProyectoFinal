@@ -42,16 +42,18 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 			if(authHeader != null && authHeader.startsWith("Bearer ")) {
 				try {
 					String token = authHeader.substring("Bearer ".length());
-					System.out.println(token);
+					//System.out.println(token);
 					Algorithm alg = Algorithm.HMAC256(sysKey.getBytes());
 					JWTVerifier verifier = JWT.require(alg).build();
 					DecodedJWT decoded = verifier.verify(token);
 					String username = decoded.getSubject();
-					System.out.println(username);
+					//System.out.println(username);
 					String[] roles = decoded.getClaim("estados").asArray(String.class);
 					Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 					for(String r : roles) { authorities.add(new SimpleGrantedAuthority(r)); }
+					System.out.println(authorities.toString());
 					UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
+					System.out.println(authenticationToken);
 					SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 					filterChain.doFilter(request, response);
 				}
