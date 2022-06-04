@@ -59,10 +59,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		
 		User u = (User) auth.getPrincipal();
 	
-		Algorithm alg = Algorithm.HMAC256(sysKey.getBytes());
-		// EMPLEANDO CLASE TOKEN PROVIDER DA NULL 
-		System.out.println(this.tp);
-		
+		Algorithm alg = Algorithm.HMAC256(sysKey.getBytes());	
 		String access_token = JWT.create().withSubject(u.getUsername())
 				.withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
 				.withIssuer(request.getRequestURL().toString())

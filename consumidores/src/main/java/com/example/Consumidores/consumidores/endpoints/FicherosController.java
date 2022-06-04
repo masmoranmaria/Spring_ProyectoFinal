@@ -39,6 +39,7 @@ public class FicherosController {
 	
 	@GetMapping("/titulo/{titulo}")
 	public ResponseEntity<Fichero> getByTitulo(@PathVariable("titulo") String titulo){
+		System.out.println("Entro");
 		String uri = "http://localhost:8080/api/ficheros/titulo/" + titulo;
 		RestTemplate rt = new RestTemplate();
 		

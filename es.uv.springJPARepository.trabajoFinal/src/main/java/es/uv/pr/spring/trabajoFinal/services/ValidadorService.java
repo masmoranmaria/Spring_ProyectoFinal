@@ -12,23 +12,19 @@ import es.uv.pr.spring.trabajoFinal.domain.Productor.Estado;
 import es.uv.pr.spring.trabajoFinal.repositories.ProductoresRepository;
 import es.uv.pr.spring.trabajoFinal.repositories.ValidadoresRepository;
 
-
-
-
 @Service
 public class ValidadorService {
-	
+
 	@Autowired
 	private ProductoresRepository pr;
-	
-	@Autowired 
+
+	@Autowired
 	ValidadoresRepository vr;
-	
-	
+
 	public List<Productor> getProductores() {
 		return this.pr.findAll();
 	}
-	
+
 	public Productor getProductor(Integer id) {
 
 		Optional<Productor> p = this.pr.findById(id);
@@ -38,27 +34,51 @@ public class ValidadorService {
 		} else
 			return p.get();
 	}
-	
-	public Productor updateProductor(Integer id , Productor p) {
+
+	public Productor updateProductor(Integer id, Productor p) {
 
 		Optional<Productor> update = this.pr.findById(id);
 		if (update.isEmpty()) {
 			return null;
 		}
 
-		update.get().setNombre(p.getNombre());
-		update.get().setApellidos(p.getApellidos());
-		update.get().setEmail(p.getEmail());
-		update.get().setPassword(p.getPassword());
-		update.get().setNIF(p.getNIF());
-		update.get().setCuota(p.getCuota());
-		update.get().setEstado(p.getEstado());
-		update.get().setTipo(p.getTipo());
+		// COMPROBAR CAMPOS NOT NULL
+		if (p.getNombre() != null) {
+			update.get().setNombre(p.getNombre());
+		}
+		if (p.getApellidos() != null) {
+
+			update.get().setApellidos(p.getApellidos());
+		}
+
+		if (p.getEmail() != null) {
+
+			update.get().setEmail(p.getEmail());
+		}
+		if (p.getPassword() != null) {
+
+			update.get().setPassword(p.getPassword());
+		}
+
+		if (p.getNIF() != null) {
+
+			update.get().setNIF(p.getNIF());
+		}
+
+		if (p.getTipo() != null) {
+			update.get().setTipo(p.getTipo());
+		}
+		
+		if (p.getCuota() != null) {
+			update.get().setCuota(p.getCuota());
+		}
+
+		//update.get().setEstado(p.getEstado());
 
 		this.pr.save(update.get());
 		return update.get();
 	}
-	
+
 	public Productor validarProductor(Integer id, Double cuota) {
 		Productor p = getProductor(id);
 		p.setEstado(Estado.A);
@@ -66,25 +86,25 @@ public class ValidadorService {
 		this.pr.save(p);
 		return p;
 	}
-	
-	public Productor deleteProductor (Integer id) {
+
+	public Productor deleteProductor(Integer id) {
 		Productor deleted = this.getProductor(id);
-		if(deleted != null) {
+		if (deleted != null) {
 			this.pr.deleteById(id);
 			return deleted;
 		} else {
 			return null;
 		}
 	}
-	
-	public Validador getByEmail ( String email) {
-		
+
+	public Validador getByEmail(String email) {
+
 		Optional<Validador> v = this.vr.findByEmail(email);
-		if(v.isEmpty()) {
+		if (v.isEmpty()) {
 			return null;
-		} else return v.get();
-		
+		} else
+			return v.get();
+
 	}
-	
 
 }

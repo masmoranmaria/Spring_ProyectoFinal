@@ -19,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// Hacer peticion al repositorio
-		String uri = "http://localhost:8080/repo/validadores/" + email;
+		String uri = "http://localhost:8083/repo/validadores/" + email;
 		RestTemplate rt = new RestTemplate();
 		Validador result = rt.getForObject(uri, Validador.class);
 		if (result != null) {

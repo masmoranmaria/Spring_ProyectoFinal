@@ -1,27 +1,39 @@
 package com.Productores.endpoints;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.Productores.domain.Fichero;
 import com.Productores.domain.Productor;
 import com.Productores.domain.Trabajo;
+import com.Productores.security.TokenProvider;
 
 @RestController
 @RequestMapping(value = "/api/productores", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProductorController {
+
+	@Autowired
+	TokenProvider tk;
 
 //	Solicitud de registro de un nuevo productor (PF1). Se indicará NIF/CIF, nombre
 //	completo o razón social, tipo (persona física o jurídica), e-mail y contraseña. El
@@ -32,7 +44,7 @@ public class ProductorController {
 	public Productor createProductor(@RequestBody Productor p) {
 
 		System.out.println("Entrando post");
-		String uri = "http://localhost:8080/repo/productores";
+		String uri = "http://localhost:8083/repo/productores";
 		RestTemplate rt = new RestTemplate();
 		p.setPassword(new BCryptPasswordEncoder().encode(p.getPassword()));
 		HttpEntity<Productor> request = new HttpEntity<>(p);
@@ -48,13 +60,13 @@ public class ProductorController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Productor updateProductor(@RequestBody Productor p, @PathVariable("id") Integer id) {
 
-		String uri = "http://localhost:8080/repo/productores/" + id;
+		String uri = "http://localhost:8083/repo/productores/" + id;
 		RestTemplate rt = new RestTemplate();
-		if(p.getPassword() != "") {
+		if (p.getPassword() != "") {
 			p.setPassword(new BCryptPasswordEncoder().encode(p.getPassword()));
 		}
 		HttpEntity<Productor> request = new HttpEntity<>(p);
-		
+
 		Productor result = rt.postForObject(uri, request, Productor.class);
 		return result;
 	}
@@ -69,31 +81,74 @@ public class ProductorController {
 	// SE NECESITA AUTENTICAR CON JWT PARA PODER IDENTIFCAR AL QUE LO SUBE
 
 	@PostMapping("/publicar")
-	public ResponseEntity<Fichero> publicar(@RequestBody Fichero f) {
+	public ResponseEntity<Fichero> publicar(//@RequestParam("file") MultipartFile f,
+			@RequestHeader(value="Authorization") String cabecera,
+			@RequestParam("tamanyo") int tamanyo, @RequestParam("palabrasClave") String palabrasClave,
+			@RequestParam("titulo") String titulo, @RequestParam("descripcion") String descripcion)
+			
+	{
+		System.out.println("Entro al post");
 		
-		//sacar mediante token el id del productor que lo sube 
-		Integer id = 0;
-		//enviar el trabaj
+		
+		Fichero fichero = new Fichero ();
+		fichero.setFechaCreacion(LocalDate.now().toString());
+		fichero.setDescripcion(descripcion);
+		fichero.setPalabrasClave(palabrasClave);
+		fichero.setTamanyo(tamanyo);
+		fichero.setTitulo(titulo);
+		fichero.setNumDesc(0);
+		fichero.setNumPrev(0);
+		fichero.setEstado("pendiente");
+		
+		//fichero.setContenido();
+		//COMO ALMACENAR CONTENIDO FICHERO 
 		
 		Trabajo t = new Trabajo();
 		t.setNum_desc(0);
 		t.setNum_prev(0);
 		
-		String uriMongo = "http://localhost:8080/api/ficheros/";
-		String uriJPA = "http://localhost:8080/repo/trabajos/";
-		
+		//RESTAR LOS MB DE LA CUOTA DEL PRODUCTOR
+
+		// SACAMOS EL USERNAME DEL TOKEN
+		String token = this.tk.getTokenFromHeader(cabecera);
+		String email = this.tk.getUsernameFromToken(token);		
+
+		// BUSCAMOS EL PRODUTOR
+		String uri = "http://localhost:8083/repo/productores/" + email;
 		RestTemplate rt = new RestTemplate();
-		HttpEntity<Fichero> request = new HttpEntity<>(f);
+		Productor p = rt.getForObject(uri, Productor.class);
+		if (p == null) {
+			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+		}
+
+		//Enviar fichero a mongo
+		String uriMongo = "http://localhost:8080/api/ficheros";
+		HttpEntity<Fichero> request = new HttpEntity<>(fichero);
 		Fichero fich = rt.postForObject(uriMongo, request, Fichero.class);
 		
-		//devolver el id del fichero que se creo en mongo
+		//Devolver el id del fichero que se creo en mongo
 		t.setId_mongo(fich.getId());
+		t.setProductor(p);
+		
+		//Guardar el trabajo
+		String uriJPA = "http://localhost:8083/repo/trabajos/";
 		HttpEntity<Trabajo> request1 = new HttpEntity<>(t);
-		
 		Trabajo result2 = rt.postForObject(uriJPA, request1, Trabajo.class);
-		
-		return new ResponseEntity<> (fich, HttpStatus.OK);
+		return new ResponseEntity<>(null, HttpStatus.OK);
 
 	}
+	
+//	Consultar el listado de ficheros de datos del productor (PF4). Requerirá
+//	autenticación y que su estado sea activo.
+	
+	
+	
+//	 Modificar la información de un fichero de datos del productor (PF5). Se podrán
+//	actualizar el título, descripción y palabras clave. Requerirá autenticación y que su
+//	estado sea activo.
+	
+	
+//	Eliminar un fichero de datos del productor (PF6). Requerirá autenticación y que su
+//	estado sea activo.
 
 }

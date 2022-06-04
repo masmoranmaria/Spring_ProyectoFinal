@@ -57,6 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     		.authorizeRequests()
     		.antMatchers("/authenticate", "/authenticate/refresh").permitAll()
     		.antMatchers(HttpMethod.PUT, "/api/productores/**").hasAnyAuthority("A")
+    		.antMatchers(HttpMethod.POST, "/api/productores/publicar/").hasAnyAuthority("A")
     		.and()
     		.addFilter(customAuthenticationFilter)
     		.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

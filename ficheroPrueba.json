@@ -1,0 +1,19 @@
+{
+	"id" : 8, 
+
+	"nombre":"Manolo",
+
+	"apellidos" : "Pruebas",
+
+	 "nif" : "22222222F",
+
+	 "email": "manolete@uv.es",
+
+	 "password" : "1234",
+	
+		"tipo" : "F", 
+
+	  "estado" : "A",
+	
+		"cuota" : 20000
+}

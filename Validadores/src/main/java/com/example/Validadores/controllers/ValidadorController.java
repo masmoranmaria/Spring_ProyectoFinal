@@ -32,7 +32,7 @@ public class ValidadorController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Object[] getProductores() {
 		// hacer la petición
-		String uri = "http://localhost:8080/repo/validadores";
+		String uri = "http://localhost:8083/repo/validadores";
 		RestTemplate rt = new RestTemplate();
 		Object[] result = rt.getForObject(uri, Object[].class);
 		return result;
@@ -48,7 +48,7 @@ public class ValidadorController {
 	public ResponseEntity<String> approbarProductor(@PathVariable("id") Integer id, @RequestBody Double c) {
 		// hacer la petición
 		try {
-			String uri = "http://localhost:8080/repo/validadores/validar/" + id;
+			String uri = "http://localhost:8083/repo/validadores/validar/" + id;
 			RestTemplate rt = new RestTemplate();
 			HttpEntity<Double> request = new HttpEntity<>(c);
 			Object result = rt.postForObject(uri, request, Object.class);
@@ -73,7 +73,7 @@ public class ValidadorController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Productor updateProductor(@PathVariable("id") Integer id, @RequestBody Productor p) {
 		
-		String uri = "http://localhost:8080/repo/validadores/"+ id;
+		String uri = "http://localhost:8083/repo/validadores/"+ id;
 		RestTemplate rt = new RestTemplate();
 		if(p.getPassword() != "") {
 			p.setPassword(new BCryptPasswordEncoder().encode(p.getPassword()));
@@ -89,7 +89,7 @@ public class ValidadorController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Productor deleteProductor(@PathVariable("id") Integer id) {
 		
-		String uri = "http://localhost:8080/repo/validadores/delete/"+id;
+		String uri = "http://localhost:8083/repo/validadores/delete/"+id;
 		RestTemplate rt = new RestTemplate();
 		Productor result = rt.getForObject(uri,  Productor.class);
 		return result;

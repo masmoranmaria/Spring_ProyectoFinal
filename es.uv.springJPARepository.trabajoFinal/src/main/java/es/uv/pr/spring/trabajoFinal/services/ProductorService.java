@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import es.uv.pr.spring.trabajoFinal.domain.Productor;
 import es.uv.pr.spring.trabajoFinal.repositories.ProductoresRepository;
 
-
 @Service
 public class ProductorService {
 
@@ -15,6 +14,8 @@ public class ProductorService {
 	private ProductoresRepository pr;
 
 	public Productor registrarProductor(Productor p) {
+		int size = this.pr.findAll().size();
+		p.setId(size);
 		return this.pr.save(p);
 
 	}
@@ -61,15 +62,38 @@ public class ProductorService {
 		if (update.isEmpty()) {
 			return null;
 		}
+		
+		System.out.println(update.get().toString());
+		System.out.println(p.toString());
+		
+		//COMPROBAR CAMPOS NOT NULL
+		if (p.getNombre() != null) {
+			update.get().setNombre(p.getNombre());
+		}
+		if (p.getApellidos() != null) {
 
-		update.get().setNombre(p.getNombre());
-		update.get().setApellidos(p.getApellidos());
-		update.get().setEmail(p.getEmail());
-		update.get().setPassword(p.getPassword());
-		update.get().setNIF(p.getNIF());
-		update.get().setTipo(p.getTipo());
+			update.get().setApellidos(p.getApellidos());
+		}
 
-		//this.pr.save(update.get());
+		if (p.getEmail() != null) {
+
+			update.get().setEmail(p.getEmail());
+		}
+		if (p.getPassword() != null) {
+
+			update.get().setPassword(p.getPassword());
+		}
+		
+		if (p.getNIF() != null) {
+
+			update.get().setNIF(p.getNIF());
+		}
+
+		if(p.getTipo() != null) {
+			update.get().setTipo(p.getTipo());
+		}
+		
+		this.pr.save(update.get());
 		return update.get();
 	}
 

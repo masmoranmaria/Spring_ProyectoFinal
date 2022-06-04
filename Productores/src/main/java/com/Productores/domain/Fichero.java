@@ -9,33 +9,38 @@ public class Fichero {
 	private String descripcion;
 	private String PalabrasClave;
 	private String estado;
-	private String tamanyo;
-	private String numPrev;
-	private String numDesc;
+	private int tamanyo;
+	private int numPrev;
+	private int numDesc;
 	private String contenido;
 	
-	public Fichero() {}
-	
-	public Fichero(String FechaCreacion, String titulo, String descripcion, String PalabrasClave, String estado, String tamanyo, String numPrev, String numDesc) {
-		this.FechaCreacion = FechaCreacion;
+	public Fichero() {
+		
+	}
+
+	public Fichero(String id, String fechaCreacion, String titulo, String descripcion, String palabrasClave,
+			String estado, int tamanyo, int numPrev, int numDesc, String contenido) {
+		super();
+		this.id = id;
+		FechaCreacion = fechaCreacion;
 		this.titulo = titulo;
 		this.descripcion = descripcion;
-		this.PalabrasClave = PalabrasClave;
+		PalabrasClave = palabrasClave;
 		this.estado = estado;
 		this.tamanyo = tamanyo;
 		this.numPrev = numPrev;
 		this.numDesc = numDesc;
+		this.contenido = contenido;
 	}
-	
+
 	public String getId() {
-		return this.id;
+		return id;
 	}
-	
 
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public String getFechaCreacion() {
 		return FechaCreacion;
 	}
@@ -76,27 +81,27 @@ public class Fichero {
 		this.estado = estado;
 	}
 
-	public String getTamanyo() {
+	public int getTamanyo() {
 		return tamanyo;
 	}
 
-	public void setTamanyo(String tamanyo) {
+	public void setTamanyo(int tamanyo) {
 		this.tamanyo = tamanyo;
 	}
 
-	public String getNumPrev() {
+	public int getNumPrev() {
 		return numPrev;
 	}
 
-	public void setNumPrev(String numPrev) {
+	public void setNumPrev(int numPrev) {
 		this.numPrev = numPrev;
 	}
 
-	public String getNumDesc() {
+	public int getNumDesc() {
 		return numDesc;
 	}
 
-	public void setNumDesc(String numDesc) {
+	public void setNumDesc(int numDesc) {
 		this.numDesc = numDesc;
 	}
 
@@ -107,6 +112,18 @@ public class Fichero {
 	public void setContenido(String contenido) {
 		this.contenido = contenido;
 	}
+
+	@Override
+	public String toString() {
+		return "Fichero [id=" + id + ", FechaCreacion=" + FechaCreacion + ", titulo=" + titulo + ", descripcion="
+				+ descripcion + ", PalabrasClave=" + PalabrasClave + ", estado=" + estado + ", tamanyo=" + tamanyo
+				+ ", numPrev=" + numPrev + ", numDesc=" + numDesc + ", contenido=" + contenido + "]";
+	}
+	
+	
+	
+	
+	
 	
 	
 }
