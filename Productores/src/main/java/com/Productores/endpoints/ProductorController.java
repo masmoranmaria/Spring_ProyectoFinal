@@ -107,8 +107,7 @@ public class ProductorController {
 		t.setNum_desc(0);
 		t.setNum_prev(0);
 		
-		//RESTAR LOS MB DE LA CUOTA DEL PRODUCTOR
-
+	
 		// SACAMOS EL USERNAME DEL TOKEN
 		String token = this.tk.getTokenFromHeader(cabecera);
 		String email = this.tk.getUsernameFromToken(token);		
@@ -118,8 +117,16 @@ public class ProductorController {
 		RestTemplate rt = new RestTemplate();
 		Productor p = rt.getForObject(uri, Productor.class);
 		if (p == null) {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+		
+		if(p.getCuota()-tamanyo > 0 ) {
+			p.setCuota(p.getCuota()-tamanyo);
+			updateProductor(p , p.getId());
 			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
 		}
+		
+		
 
 		//Enviar fichero a mongo
 		String uriMongo = "http://localhost:8080/api/ficheros";
@@ -140,6 +147,11 @@ public class ProductorController {
 	
 //	Consultar el listado de ficheros de datos del productor (PF4). Requerirá
 //	autenticación y que su estado sea activo.
+	@GetMapping("/ficheros")
+	public ResponseEntity<Fichero> getFichero( @PathVariable("id") Integer id) {
+		return null;
+	}
+	
 	
 	
 	
