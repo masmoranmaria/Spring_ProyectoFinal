@@ -18,6 +18,12 @@ import com.example.Consumidores.consumidores.domain.Fichero;
 
 @RestController("/api/ficheros")
 public class FicherosController {
+
+	@GetMapping("/pruebas")
+	public ResponseEntity<String> prueba() {
+		System.out.println("PEPINILLO");
+		return new ResponseEntity<>("FUNSIONAAAAA", HttpStatus.OK);
+	}
 	
 	
 	@PostMapping
