@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+  labels:
+    app: mongo
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  type: ClusterIP
+  selector:
+    app: mongo
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo # tiene que coincidir con .spec.template.metadata.labels
+  serviceName: "mongo-service"
+  template:
+    metadata:
+      labels:
+        app: mongo # tiene que coincidir con .spec.selector.matchLabels
+    spec:
+      containers:
+      - name: mongo
+        image: mongo:latest
+        ports:
+        - containerPort: 27017
+        env:
+        - name: MONGODB_USERNAME
+          value: admin
+        - name: MONGODB_PASSWORD
+          value: password
+        - name: MONGODB_DATABASE
+          value: admin
+        volumeMounts:
+        - name: mongo-pv
+          mountPath: /data/db
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-pv
+    spec:
+      storageClassName: almacenamiento.local
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
