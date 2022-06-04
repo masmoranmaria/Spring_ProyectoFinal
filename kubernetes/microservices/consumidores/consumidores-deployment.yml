@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumidores-microservice-deployment
+  labels:
+    app: consumidores-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumidores-microservice
+  template:
+    metadata:
+      labels:
+        app: consumidores-microservice
+    spec:
+      containers:
+      - name: consumidores-microservice
+        image: consumidores-microservice
+        imagePullPolicy: Never
+        ports:
+          - name: http
+            containerPort: 8080

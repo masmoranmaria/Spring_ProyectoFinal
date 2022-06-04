@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-microservice-deployment
+  labels:
+    app: mongo-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-microservice
+  template:
+    metadata:
+      labels:
+        app: mongo-microservice
+    spec:
+      containers:
+      - name: mongo-microservice
+        image: mongo-microservice
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
