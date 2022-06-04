@@ -2,7 +2,6 @@ package com.example.Validadores.security;
 
 import java.util.Collection;
 
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,9 +24,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 		Validador result = rt.getForObject(uri, Validador.class);
 		if (result != null) {
 			//El validador no tiene authorities
-			return new org.springframework.security.core.userdetails.User(result.getEmail(), result.getPassword(), null);
+			return new org.springframework.security.core.userdetails.User(result.getEmail(), result.getPassword(), getEstado(result));
 		} else { throw new UsernameNotFoundException("El productor no existe");}
 
+	}
+	
+	private static Collection<? extends GrantedAuthority> getEstado(Validador v) {
+		//Crear un array de en vez con los roles con el estado (A , I , P), solo habrá uno
+		String[] estado = new String[] {"V"};
+		Collection<GrantedAuthority> estados = AuthorityUtils.createAuthorityList(estado);
+		return estados;
 	}
 
 }

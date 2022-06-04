@@ -51,9 +51,9 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 					String[] roles = decoded.getClaim("estados").asArray(String.class);
 					Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 					for(String r : roles) { authorities.add(new SimpleGrantedAuthority(r)); }
-					System.out.println(authorities.toString());
+					
 					UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
-					System.out.println(authenticationToken);
+					
 					SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 					filterChain.doFilter(request, response);
 				}

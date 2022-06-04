@@ -16,32 +16,32 @@ public class TestEntidades {
 		em.getTransaction().begin();
 
 		// Construimos un objeto de Productor
-		Productor newProductor = new Productor(1, "María", "Mas Moran", "222222222F", "masmoma10@gamil.com", "12345",
-				Productor.Tipo.F, Productor.Estado.P, 8000.12);
-		Validador newValidador = new Validador(1, "David", "Núñez", "davidnumar@gamil.com", "12345");
-		Trabajo newTrabajo = new Trabajo(1, "0000finw", newProductor, newValidador, 0, 0);
+//		Productor newProductor = new Productor(1, "María", "Mas Moran", "222222222F", "masmoma10@gamil.com", "12345",
+//				Productor.Tipo.F, Productor.Estado.P, 8000.12);
+//		Validador newValidador = new Validador(1, "David", "Núñez", "davidnumar@gamil.com", "12345");
+//		Trabajo newTrabajo = new Trabajo(1, "0000finw", newProductor, newValidador, 0, 0);
 
 		// Persistimos los objetos
-		 em.persist(newProductor);
-		 em.persist(newValidador);
-		 em.persist(newTrabajo);
+//		 em.persist(newProductor);
+//		 em.persist(newValidador);
+//		 em.persist(newTrabajo);
 
 		// Recuperamos las entidades
 		// Actualizamos las entidades
 
-		Validador v = em.find(Validador.class, 1);
-		v.setPassword("8888888");
-		Productor p = em.find(Productor.class, 1);
-		p.setApellidos("Lliso");
-		Trabajo t = em.find(Trabajo.class, 1);
-		t.setNum_prev(100);
+		Validador v = em.find(Validador.class, 0);
+		//v.setPassword("8888888");
+		Productor p = em.find(Productor.class, 0);
+		//p.setApellidos("Lliso");
+		//Trabajo t = em.find(Trabajo.class, 0);
+		//t.setNum_prev(100);
 
 		// Eliminamos el objeto
 
 		em.remove(p);
 		em.remove(v);
 		//Borrado en cascada
-		em.remove(t);
+		//em.remove(t);
 
 		// Commiteamos la transacción
 		em.getTransaction().commit();

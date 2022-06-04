@@ -7,11 +7,12 @@ import java.util.Random;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import es.uv.pr.spring.trabajoFinal.domain.Productor;
 import es.uv.pr.spring.trabajoFinal.domain.Trabajo;
@@ -20,9 +21,8 @@ import es.uv.pr.spring.trabajoFinal.repositories.ProductoresRepository;
 import es.uv.pr.spring.trabajoFinal.repositories.TrabajosRepository;
 import es.uv.pr.spring.trabajoFinal.repositories.ValidadoresRepository;
 
-
-@SpringBootApplication
-public class TrabajoFinalApplication { //  implements ApplicationRunner {
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+public class TrabajoFinalApplication implements ApplicationRunner {
 
 	@Autowired
 	private ProductoresRepository productoresRepository;
@@ -38,14 +38,17 @@ public class TrabajoFinalApplication { //  implements ApplicationRunner {
 		SpringApplication.run(TrabajoFinalApplication.class, args);
 	}
 
-//	@Override
-//	public void run( ApplicationArguments args ) throws Exception {
-//		//Llamamos al metodo que nos cerará las instancias de prueba de la BD
-//		generateProductores(3);
-//		generateValidadores(3);
-//		generateTrabajos(3);
-//		System.exit(0);
-//	}
+	@Override
+	public void run( ApplicationArguments args ) throws Exception {
+		//Llamamos al metodo que nos cerará las instancias de prueba de la BD
+		if(productoresRepository.findAll() == null || validadoresRepository.findAll() == null) {
+				generateProductores(10);
+				generateValidadores(10);
+				//generateTrabajos(10);
+		}
+	
+		//System.exit(0);
+	}
 
 	public String randomString(int length) {
 		int leftLimit = 97; // letter 'a'
@@ -93,7 +96,7 @@ public class TrabajoFinalApplication { //  implements ApplicationRunner {
 			p.setEstado(Productor.Estado.A);
 			// poner tipo random
 			p.setTipo(Productor.Tipo.F);
-			p.setPassword(randomString(8));
+			p.setPassword(new BCryptPasswordEncoder().encode("1234"));
 			productores.add(p);
 		}
 
@@ -129,7 +132,7 @@ public class TrabajoFinalApplication { //  implements ApplicationRunner {
 			v.setNombre(nombres[randomNombre]);
 			v.setApellidos(apellidos[randomApellido1] + " " + apellidos[randomApellido2]);
 			v.setEmail(emails[randomEmail]);
-			v.setPassword(randomString(8));
+			v.setPassword(new BCryptPasswordEncoder().encode("1234"));
 			validadores.add(v);
 		}
 
