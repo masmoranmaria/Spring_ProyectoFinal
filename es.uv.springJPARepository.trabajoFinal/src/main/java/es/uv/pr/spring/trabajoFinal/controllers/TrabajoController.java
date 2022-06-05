@@ -27,19 +27,25 @@ public class TrabajoController {
 
 	@Autowired
 	TrabajoService ts;
-	
+
 	@Autowired
 	ValidadorService vs;
-	
+
 	@Autowired
 	ProductorService ps;
-	
+
 	@PostMapping
 	public ResponseEntity<Trabajo> createTrabajo(@RequestBody Trabajo t) {
-		
-		return new  ResponseEntity<>( this.ts.createTrabajo(t), HttpStatus.CREATED);
+
+		return new ResponseEntity<>(this.ts.createTrabajo(t), HttpStatus.CREATED);
 
 	}
 
-	
+	@PostMapping("/productor")
+	public ResponseEntity<List<Trabajo>> getByProductorId(@RequestBody Productor p) {
+
+		return new ResponseEntity<>(this.ts.getByProdId(p), HttpStatus.CREATED);
+
+	}
+
 }

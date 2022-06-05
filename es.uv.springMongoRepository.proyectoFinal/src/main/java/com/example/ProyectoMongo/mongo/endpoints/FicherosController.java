@@ -31,6 +31,14 @@ public class FicherosController {
 		return ficheroService.saveFichero(fichero);
 	}
 	
+	
+	@GetMapping()
+	public ResponseEntity<List<Fichero>> getAll() {
+		return ficheroService.getAll();
+	}
+	
+
+	
 	@GetMapping("/active")
 	public ResponseEntity<List<Fichero>> getAllActive() {
 		return ficheroService.getAllActive();

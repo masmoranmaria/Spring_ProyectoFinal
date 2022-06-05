@@ -20,6 +20,10 @@ public class FicherosService {
 	@Autowired
 	private FicherosRepository ficheroRepository;
 	
+	
+	public ResponseEntity<List<Fichero>> getAll() {
+		return new ResponseEntity<>(ficheroRepository.findAll(), HttpStatus.OK);
+	}
 	public ResponseEntity<Fichero> saveFichero(Fichero fichero) {
 		return new ResponseEntity<>(ficheroRepository.save(fichero), HttpStatus.OK);
 	}
@@ -33,7 +37,7 @@ public class FicherosService {
 		
 		if(fichero.isEmpty())
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		
+		System.out.println("Busco");
 		return new ResponseEntity<>(fichero.get(), HttpStatus.OK);
 	}
 	
