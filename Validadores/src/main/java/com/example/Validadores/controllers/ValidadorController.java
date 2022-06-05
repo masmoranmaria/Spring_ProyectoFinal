@@ -22,7 +22,7 @@ import com.example.Validadores.domain.Fichero;
 import com.example.Validadores.domain.Productor;
 
 @RestController
-@RequestMapping(value = "/api/validadores", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ValidadorController {
 
 	//  Obtener el listado de productores (VF1). Si no se indica ningún filtro se devolverá todo el listado de productores.
