@@ -40,11 +40,12 @@ public class TrabajoFinalApplication implements ApplicationRunner {
 
 	@Override
 	public void run( ApplicationArguments args ) throws Exception {
+		
 		//Llamamos al metodo que nos cerará las instancias de prueba de la BD
 		if(productoresRepository.findAll() == null || validadoresRepository.findAll() == null) {
 				generateProductores(10);
 				generateValidadores(10);
-				//generateTrabajos(10);
+				generateTrabajos(10);
 		}
 	
 		//System.exit(0);

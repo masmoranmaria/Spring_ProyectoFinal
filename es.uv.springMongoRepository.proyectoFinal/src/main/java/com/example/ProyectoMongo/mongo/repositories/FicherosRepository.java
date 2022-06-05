@@ -22,6 +22,9 @@ public interface FicherosRepository extends MongoRepository<Fichero, String> {
 	@Query("{'estado': 'publicado', 'palabrasClave' : ?0}")
 	List<Fichero> findByPalabrasClave(String palabrasClave, Sort sort);
 	
+	@Query("{'estado': 'pendiente'")
+	List<Fichero> findByEstado();
+	
 	@Query("{'id' : ?0, 'estado': 'publicado'}")
 	Optional<Fichero> findPublishedById(String id);
 	

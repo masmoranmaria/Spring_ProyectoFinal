@@ -1,5 +1,7 @@
 package com.example.Validadores.controllers;
 
+import java.util.List;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,17 +18,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-
+import com.example.Validadores.domain.Fichero;
 import com.example.Validadores.domain.Productor;
 
 @RestController
 @RequestMapping(value = "/api/validadores", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ValidadorController {
 
-//  Obtener el listado de productores (VF1). Si no se indica ningún filtro se devolverá todo el listado de productores.
-//	Opcionalmente se pueden indicar los siguientes filtros: solo pendientes de aprobación,
-//	solo los que haya consumido su cuota anual o solo los que tengan algún fichero erróneo.
-//	Requerirá autenticación.
+	//  Obtener el listado de productores (VF1). Si no se indica ningún filtro se devolverá todo el listado de productores.
+	//	Opcionalmente se pueden indicar los siguientes filtros: solo pendientes de aprobación,
+	//	solo los que haya consumido su cuota anual o solo los que tengan algún fichero erróneo.
+	//	Requerirá autenticación.
 
 	@GetMapping("/productores")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -39,9 +41,9 @@ public class ValidadorController {
 
 	}
 
-//	Aprobar un nuevo productor (VF2). Se indicará el identificador del productor y la cuota anual. 
-//	Cambiará el estado a activo. 
-//	Requerirá autenticación.
+	//	Aprobar un nuevo productor (VF2). Se indicará el identificador del productor y la cuota anual. 
+	//	Cambiará el estado a activo. 
+	//	Requerirá autenticación.
 
 	@PostMapping("/validar/{id}")
 	// @ResponseStatus(HttpStatus.CREATED)
@@ -64,36 +66,49 @@ public class ValidadorController {
 		}
 
 	}
-	
-	//Modificación de la información de un productor (VF3). 
-	//Se podrá actualizar cualquier campo del productor a través de su identificador.
-	//Requerirá autenticación.
-	
+
+	// Modificación de la información de un productor (VF3).
+	// Se podrá actualizar cualquier campo del productor a través de su
+	// identificador.
+	// Requerirá autenticación.
+
 	@PutMapping("/productor/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Productor updateProductor(@PathVariable("id") Integer id, @RequestBody Productor p) {
-		
-		String uri = "http://localhost:8083/repo/validadores/"+ id;
+
+		String uri = "http://localhost:8083/repo/validadores/" + id;
 		RestTemplate rt = new RestTemplate();
-		if(p.getPassword() != "") {
+		if (p.getPassword() != "") {
 			p.setPassword(new BCryptPasswordEncoder().encode(p.getPassword()));
 		}
 		HttpEntity<Productor> request = new HttpEntity<>(p);
-		Productor result = rt.postForObject(uri, request,  Productor.class);
+		Productor result = rt.postForObject(uri, request, Productor.class);
 		return result;
 	}
-	
-//	Eliminar un productor (VF4). Se indicará el identificador del productor. Requerirá
-//	autenticación.
+
+	//	Eliminar un productor (VF4). Se indicará el identificador del productor. Requerirá
+	//	autenticación.
 	@DeleteMapping("/productor/delete/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Productor deleteProductor(@PathVariable("id") Integer id) {
-		
-		String uri = "http://localhost:8083/repo/validadores/delete/"+id;
+
+		String uri = "http://localhost:8083/repo/validadores/delete/" + id;
 		RestTemplate rt = new RestTemplate();
-		Productor result = rt.getForObject(uri,  Productor.class);
+		Productor result = rt.getForObject(uri, Productor.class);
 		return result;
 	}
-	
+
+	//	Obtener el listado de ficheros pendientes de revisión (VF5). Para cada fichero se
+	//	obtendrá el identificador, título, descripción, nombre del productor y las primeras 10
+	//	observaciones. Requerirá autenticación.
+
+	@GetMapping("/ficheros/pendientes")
+	public ResponseEntity<List<Fichero>> getFicherosPendientes() {
+
+		String uri = "http://localhost:8080/api/ficheros/pendientes";
+		RestTemplate rt = new RestTemplate();
+		ResponseEntity<List<Fichero>> ficheros = rt.getForObject(uri, ResponseEntity.class);
+		return ficheros;
+	}
 
 }

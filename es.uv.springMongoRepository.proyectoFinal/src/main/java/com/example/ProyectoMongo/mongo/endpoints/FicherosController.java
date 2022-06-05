@@ -31,7 +31,6 @@ public class FicherosController {
 		return ficheroService.saveFichero(fichero);
 	}
 	
-	
 	@GetMapping()
 	public ResponseEntity<List<Fichero>> getAll() {
 		return ficheroService.getAll();
@@ -42,7 +41,15 @@ public class FicherosController {
 		return ficheroService.updateFichero(fichero, id);
 	}
 	
-
+	@GetMapping("/delete/{id}")
+	public ResponseEntity<Fichero> deleteFichero(String id ) {
+		return ficheroService.deleteFichero(id);
+	}
+	
+	@GetMapping("/pendientes")
+	public ResponseEntity<List<Fichero>> getFicherosPendientes() {
+		return ficheroService.getFicherosPendientes();
+	}
 	
 	@GetMapping("/active")
 	public ResponseEntity<List<Fichero>> getAllActive() {

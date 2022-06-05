@@ -210,12 +210,31 @@ public class ProductorController {
 //	Eliminar un fichero de datos del productor (PF6). Requerirá autenticación y que su
 //	estado sea activo.
 //	
-//	@DeleteMapping("/ficheros/{id}")
-//	public ResponseEntity<Fichero> updateFichero( @RequestHeader(value="Authorization") String cabecera, @RequestParam("id")
-//	  String id  ) {
-//		
-//		
-//		
-//	}
+	@DeleteMapping("/ficheros/{id}")
+	public ResponseEntity<Fichero> deleteFichero ( @RequestHeader(value="Authorization") String cabecera, @RequestParam("id")
+	  String id  ) {
+		
+		ResponseEntity<List<Fichero>> result = getFicherosByProdID(cabecera);
+		List<Fichero> ficheros = result.getBody();
+		
+		Fichero nuevo = new Fichero();
+		for(Fichero fich : ficheros) {
+			if(fich.getId() == id) {
+				nuevo = fich;
+			}
+		}
+		
+		if(nuevo == null) {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+		
+		RestTemplate rt = new RestTemplate();
+		String uriMongo = "http://localhost:8080/api/ficheros/delete"+ nuevo.getId();
+		
+		ResponseEntity <Fichero> res =  rt.getForObject(uriMongo,  ResponseEntity.class );
+		return res;
+		
+		
+	}
 
 }
