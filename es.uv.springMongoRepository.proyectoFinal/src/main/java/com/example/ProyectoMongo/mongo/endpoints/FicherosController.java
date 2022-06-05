@@ -3,6 +3,7 @@ package com.example.ProyectoMongo.mongo.endpoints;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,12 @@ public class FicherosController {
 	@Autowired
 	private FicherosService ficheroService;
 	
+	@GetMapping("/pruebas")
+	public ResponseEntity<String> pruebas() {
+		System.out.println("Pepino");
+		return new ResponseEntity<>("pepino", HttpStatus.OK);
+	}
+
 	@PostMapping
 	public ResponseEntity<Fichero> saveFichero(@RequestBody Fichero fichero) {
 		return ficheroService.saveFichero(fichero);
