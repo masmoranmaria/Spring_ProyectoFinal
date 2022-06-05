@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: validadores-microservice
+  labels:
+    app: validadores-microservice
+spec:
+  type: ClusterIP
+  selector:
+    # Selecciona los objetos a los que se aplica
+    app: validadores-microservice
+  ports:
+    - name: http
+      port: 8080

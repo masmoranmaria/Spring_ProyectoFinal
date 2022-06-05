@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productores-microservice-deployment
+  labels:
+    app: productores-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: productores-microservice
+  template:
+    metadata:
+      labels:
+        app: productores-microservice
+    spec:
+      containers:
+      - name: productores-microservice
+        image: productores-microservice
+        imagePullPolicy: Never
+        ports:
+          - name: http
+            containerPort: 8080

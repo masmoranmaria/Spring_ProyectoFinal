@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: validadores-microservice-deployment
+  labels:
+    app: validadores-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: validadores-microservice
+  template:
+    metadata:
+      labels:
+        app: validadores-microservice
+    spec:
+      containers:
+      - name: validadores-microservice
+        image: validadores-microservice
+        imagePullPolicy: Never
+        ports:
+          - name: http
+            containerPort: 8080
