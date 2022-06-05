@@ -29,4 +29,11 @@ spec:
                 name: validadores-microservice
                 port:
                   number: 8080
+          - path: /api/ficheros(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: mongo-microservice
+                port:
+                  number: 8080
                   

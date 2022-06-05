@@ -13,6 +13,20 @@ spec:
 
 ---
 
+apiVersion: v1
+data:
+  MYSQL_ROOT_PASSWORD: TmV2ZXJEb1RoaXM=
+  MYSQL_DATABASE: dHJhYmFqb2ZpbmFs
+  MYSQL_USER: cm9vdA==
+  MYSQL_PASSWORD: TmV2ZXJEb1RoaXM=
+kind: Secret
+metadata:
+  name: mysql-secret
+  namespace: default
+type: Opaque
+
+---
+
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -30,19 +44,28 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: mysql/mysql-server:latest-aarch64
+        image: mysql/mysql-server:latest
         ports:
         - containerPort: 3306
           name: mysql-port
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: NeverDoThis
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_ROOT_PASSWORD
         - name: MYSQL_DATABASE
-          value: bookstore
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_DATABASE
         - name: MYSQL_USER
-          value: app_user
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_USER
         - name: MYSQL_PASSWORD
-          value: UseSecrets
+          value: mysql-secret
         volumeMounts:
         - name: mysql-pv
           mountPath: /var/lib/mysql

@@ -14,6 +14,22 @@ spec:
 
 ---
 
+apiVersion: v1
+data:
+  MONGO_ADMIN: cm9vdA==
+  MONGO_ADMIN_PASSWORD: cm9vdG1vbmdv
+  MONGO_DB: ZGF0YWJhc2U=
+  MONGO_PASSWORD: bW9uZ29wYXNzd29yZA==
+  MONGO_USER: bW9uZ29hZG1pbg==
+  MONGO_USER_ROLE: cmVhZFdyaXRl
+kind: Secret
+metadata:
+  name: mongo-secret
+  namespace: default
+type: Opaque
+
+---
+
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -35,12 +51,37 @@ spec:
         ports:
         - containerPort: 27017
         env:
-        - name: MONGODB_USERNAME
-          value: admin
-        - name: MONGODB_PASSWORD
-          value: password
-        - name: MONGODB_DATABASE
-          value: admin
+          - name: MONGO_ADMIN
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: MONGO_ADMIN
+          - name: MONGO_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: MONGO_ADMIN_PASSWORD
+          - name: MONGO_DB
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: MONGO_DB
+          - name: MONGO_USER
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: MONGO_USER
+          - name: MONGO_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: MONGO_PASSWORD
+          - name: MONGO_USER_ROLE
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: MONGO_USER_ROLE
+
         volumeMounts:
         - name: mongo-pv
           mountPath: /data/db
