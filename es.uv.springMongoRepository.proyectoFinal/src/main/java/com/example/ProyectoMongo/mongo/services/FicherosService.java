@@ -28,6 +28,28 @@ public class FicherosService {
 		return new ResponseEntity<>(ficheroRepository.save(fichero), HttpStatus.OK);
 	}
 	
+	public ResponseEntity<Fichero> updateFichero(Fichero fichero , String id) {
+		
+		Optional<Fichero> f = this.ficheroRepository.findById(id);
+		if(f == null) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		
+		
+		if(fichero.getTitulo() != null) {
+			f.get().setTitulo(fichero.getTitulo());
+		}
+		if(fichero.getDescripcion() != null) {
+			f.get().setDescripcion(fichero.getDescripcion());
+		}
+		if(fichero.getPalabrasClave() != null) {
+			f.get().setPalabrasClave(fichero.getPalabrasClave());
+		}
+		
+		this.ficheroRepository.save(f.get());
+		
+		return new ResponseEntity<> (f.get(), HttpStatus.OK);
+		
+	}
+	
 	public ResponseEntity<List<Fichero>> getAllActive() {
 		return new ResponseEntity<>(ficheroRepository.findAllActive(), HttpStatus.OK);
 	}

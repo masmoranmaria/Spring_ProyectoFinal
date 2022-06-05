@@ -37,6 +37,11 @@ public class FicherosController {
 		return ficheroService.getAll();
 	}
 	
+	@PostMapping("/update/fichero/{id}")
+	public ResponseEntity<Fichero> updateFichero(@RequestBody Fichero fichero, @RequestParam("id") String id) {
+		return ficheroService.updateFichero(fichero, id);
+	}
+	
 
 	
 	@GetMapping("/active")

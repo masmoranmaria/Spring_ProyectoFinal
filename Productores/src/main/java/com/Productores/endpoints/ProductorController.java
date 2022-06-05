@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,7 +65,7 @@ public class ProductorController {
 
 		String uri = "http://localhost:8083/repo/productores/" + id;
 		RestTemplate rt = new RestTemplate();
-		if (p.getPassword() != "") {
+		if (p.getPassword() != null) {
 			p.setPassword(new BCryptPasswordEncoder().encode(p.getPassword()));
 		}
 		HttpEntity<Productor> request = new HttpEntity<>(p);
@@ -145,10 +146,10 @@ public class ProductorController {
 //	autenticación y que su estado sea activo.
 	
 	@GetMapping("/ficheros")
-	public ResponseEntity<List<Fichero>> getFicherosByProdID( @RequestHeader(value="Authorization") String cabecera ) {
-		System.out.print(cabecera);
+	public ResponseEntity<List<Fichero>> getFicherosByProdID( @RequestHeader(value = "Authorization") String cabecera) {
+		System.out.println(cabecera);
 		Productor p = this.tk.getProdByToken(cabecera);
-		//Productor p = null;
+		
 		if (p == null) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
@@ -178,11 +179,13 @@ public class ProductorController {
 //	actualizar el título, descripción y palabras clave. Requerirá autenticación y que su
 //	estado sea activo.
 	
-	@GetMapping("/ficheros/{id}")
-	public ResponseEntity<Fichero> updateFichero( @RequestHeader(value="Authorization") String cabecera, @RequestParam("id")
-	  String id , Fichero f ) {
+	@PostMapping("/ficheros/{id}")
+	public ResponseEntity<Fichero> updateFichero( @RequestHeader(value="Authorization") String cabecera, @PathVariable("id")
+	  String id , @RequestBody Fichero f ) {
+		
 		ResponseEntity<List<Fichero>> result = getFicherosByProdID(cabecera);
 		List<Fichero> ficheros = result.getBody();
+		
 		Fichero nuevo = new Fichero();
 		for(Fichero fich : ficheros) {
 			if(fich.getId() == id) {
@@ -206,5 +209,13 @@ public class ProductorController {
 
 //	Eliminar un fichero de datos del productor (PF6). Requerirá autenticación y que su
 //	estado sea activo.
+//	
+//	@DeleteMapping("/ficheros/{id}")
+//	public ResponseEntity<Fichero> updateFichero( @RequestHeader(value="Authorization") String cabecera, @RequestParam("id")
+//	  String id  ) {
+//		
+//		
+//		
+//	}
 
 }
