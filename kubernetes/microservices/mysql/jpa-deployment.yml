@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jpa-microservice-deployment
+  labels:
+    app: jpa-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jpa-microservice
+  template:
+    metadata:
+      labels:
+        app: jpa-microservice
+    spec:
+      containers:
+      - name: jpa-microservice
+        image: jpa-microservice
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080

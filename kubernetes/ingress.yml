@@ -3,15 +3,30 @@ kind: Ingress
 metadata:
   name: cluster-ingress
   annotations:
-     nginx.ingress.kubernetes.io/rewrite-target: /
+     nginx.ingress.kubernetes.io/rewrite-target: /api/$2
 spec:
   rules:
     - http:
         paths:
-          - path: /
+          - path: /api/productores(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: productores-microservice
+                port:
+                  number: 8080
+          - path: /api/consumidores(/|$)(.*)
             pathType: Prefix
             backend:
               service:
                 name: consumidores-microservice
                 port:
                   number: 8080
+          - path: /api/validadores(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: validadores-microservice
+                port:
+                  number: 8080
+                  

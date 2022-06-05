@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: mysql:latest
+        image: mysql/mysql-server:latest-aarch64
         ports:
         - containerPort: 3306
           name: mysql-port

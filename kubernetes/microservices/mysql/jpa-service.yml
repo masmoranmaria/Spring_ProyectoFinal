@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jpa-microservice
+  labels:
+    app: jpa-microservice
+spec:
+  type: ClusterIP
+  selector:
+    # Selecciona los objetos a los que se aplica
+    app: jpa-microservice
+  ports:
+    - port: 8080
+      protocol: TCP
