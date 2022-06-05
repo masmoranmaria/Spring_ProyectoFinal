@@ -22,12 +22,15 @@ import com.example.Consumidores.consumidores.domain.Fichero;
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class FicherosController {
+
 	String mongoUri = "http://mongo-microservice:8080/api/ficheros/";
+	
 	@GetMapping("/pruebas")
 	public ResponseEntity<String> prueba() {
 		String uri = mongoUri + "pruebas";
 		RestTemplate rt = new RestTemplate();
 		String string = rt.getForObject(uri, String.class);
+
 		return new ResponseEntity<>(string, HttpStatus.OK);
 	}
 	
@@ -36,9 +39,10 @@ public class FicherosController {
 		String uri = mongoUri;
 		RestTemplate rt = new RestTemplate();
 		HttpEntity<Fichero> request = new HttpEntity<>(fichero);
+
+		Fichero res = rt.postForObject(uri, request, Fichero.class);
 		
-		
-		return rt.postForObject(uri, request, ResponseEntity.class);
+		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
 	@GetMapping("/active")
@@ -48,13 +52,11 @@ public class FicherosController {
 
 		ArrayList<Fichero> ficheros = rt.getForObject(uri, ArrayList.class);
 		
-
 		return new ResponseEntity<>(ficheros, HttpStatus.OK);
 	}
 	
 	@GetMapping("/titulo/{titulo}")
 	public ResponseEntity<Fichero> getByTitulo(@PathVariable("titulo") String titulo){
-		System.out.println("Entro");
 		String uri = mongoUri + "titulo/" + titulo;
 		RestTemplate rt = new RestTemplate();
 		Fichero fichero = rt.getForObject(uri, Fichero.class);

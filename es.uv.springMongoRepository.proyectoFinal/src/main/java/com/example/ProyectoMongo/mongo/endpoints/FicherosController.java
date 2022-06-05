@@ -29,7 +29,6 @@ public class FicherosController {
 	
 	@GetMapping("/pruebas")
 	public ResponseEntity<String> pruebas() {
-		System.out.println("Pepino");
 		return new ResponseEntity<>("pepino", HttpStatus.OK);
 	}
 
