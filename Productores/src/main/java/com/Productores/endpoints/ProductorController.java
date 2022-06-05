@@ -32,7 +32,7 @@ import com.Productores.domain.Trabajo;
 import com.Productores.security.TokenProvider;
 
 @RestController
-@RequestMapping(value = "/api/productores", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProductorController {
 
 	@Autowired
