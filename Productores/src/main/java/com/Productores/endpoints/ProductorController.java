@@ -37,6 +37,8 @@ public class ProductorController {
 
 	@Autowired
 	TokenProvider tk;
+	
+	String jpaUri = "http://jpa-microservice:8080";
 
 //	Solicitud de registro de un nuevo productor (PF1). Se indicará NIF/CIF, nombre
 //	completo o razón social, tipo (persona física o jurídica), e-mail y contraseña. El
@@ -45,9 +47,8 @@ public class ProductorController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Productor createProductor(@RequestBody Productor p) {
-
 		//System.out.println("Entrando post");
-		String uri = "http://localhost:8083/repo/productores";
+		String uri = jpaUri + "/repo/productores";
 		RestTemplate rt = new RestTemplate();
 		p.setPassword(new BCryptPasswordEncoder().encode(p.getPassword()));
 		HttpEntity<Productor> request = new HttpEntity<>(p);
@@ -63,7 +64,7 @@ public class ProductorController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Productor updateProductor(@RequestBody Productor p, @PathVariable("id") Integer id) {
 
-		String uri = "http://localhost:8083/repo/productores/" + id;
+		String uri = jpaUri + "/repo/productores/" + id;
 		RestTemplate rt = new RestTemplate();
 		if (p.getPassword() != null) {
 			p.setPassword(new BCryptPasswordEncoder().encode(p.getPassword()));
@@ -134,7 +135,7 @@ public class ProductorController {
 		t.setProductor(p);
 
 		// Guardar el trabajo
-		String uriJPA = "http://localhost:8083/repo/trabajos/";
+		String uriJPA = jpaUri + "/repo/trabajos/";
 		HttpEntity<Trabajo> request1 = new HttpEntity<>(t);
 		Trabajo result2 = rt.postForObject(uriJPA, request1, Trabajo.class);
 
@@ -229,7 +230,7 @@ public class ProductorController {
 		}
 		
 		RestTemplate rt = new RestTemplate();
-		String uriMongo = "http://localhost:8080/api/ficheros/delete"+ nuevo.getId();
+		String uriMongo = "http://mongo-microservice:8080/api/ficheros/delete"+ nuevo.getId();
 		
 		ResponseEntity <Fichero> res =  rt.getForObject(uriMongo,  ResponseEntity.class );
 		return res;

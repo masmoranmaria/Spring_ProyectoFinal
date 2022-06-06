@@ -49,13 +49,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	// customize login endpoint by overriding the AuthenticationFilter processor url
     	CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager());
     	//indicamos la ruta necesaria para el endpoint 
-    	customAuthenticationFilter.setFilterProcessesUrl("/authenticate");
+    	customAuthenticationFilter.setFilterProcessesUrl("/api/authenticate");
     	
     	http.csrf().disable()
     		.sessionManagement().sessionCreationPolicy(STATELESS)
     		.and()
     		.authorizeRequests()
-    		.antMatchers("/authenticate", "/authenticate/refresh").permitAll()
+    		.antMatchers("/api/authenticate", "/api/authenticate/refresh").permitAll()
     		.antMatchers(HttpMethod.PUT, "/api/productores/**").hasAnyAuthority("A")
     		.antMatchers(HttpMethod.POST, "/api/productores/publicar/").hasAnyAuthority("A")
     		.antMatchers(HttpMethod.GET, "/api/productores/ficheros/").hasAnyAuthority("A")

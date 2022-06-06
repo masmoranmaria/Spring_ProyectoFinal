@@ -29,12 +29,14 @@ public class ValidadorController {
 	//	Opcionalmente se pueden indicar los siguientes filtros: solo pendientes de aprobación,
 	//	solo los que haya consumido su cuota anual o solo los que tengan algún fichero erróneo.
 	//	Requerirá autenticación.
+	String jpaUri =  "http://jpa-microservice:8080";
+	String mongoUri =  "http://mongo-microservice:8080";
 
 	@GetMapping("/productores")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Object[] getProductores() {
 		// hacer la petición
-		String uri = "http://localhost:8083/repo/validadores";
+		String uri = jpaUri + "/repo/validadores";
 		RestTemplate rt = new RestTemplate();
 		Object[] result = rt.getForObject(uri, Object[].class);
 		return result;
@@ -50,7 +52,7 @@ public class ValidadorController {
 	public ResponseEntity<String> approbarProductor(@PathVariable("id") Integer id, @RequestBody Double c) {
 		// hacer la petición
 		try {
-			String uri = "http://localhost:8083/repo/validadores/validar/" + id;
+			String uri = jpaUri + "/repo/validadores/validar/" + id;
 			RestTemplate rt = new RestTemplate();
 			HttpEntity<Double> request = new HttpEntity<>(c);
 			Object result = rt.postForObject(uri, request, Object.class);
@@ -76,7 +78,7 @@ public class ValidadorController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Productor updateProductor(@PathVariable("id") Integer id, @RequestBody Productor p) {
 
-		String uri = "http://localhost:8083/repo/validadores/" + id;
+		String uri = jpaUri + "/repo/validadores/" + id;
 		RestTemplate rt = new RestTemplate();
 		if (p.getPassword() != "") {
 			p.setPassword(new BCryptPasswordEncoder().encode(p.getPassword()));
@@ -92,7 +94,7 @@ public class ValidadorController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Productor deleteProductor(@PathVariable("id") Integer id) {
 
-		String uri = "http://localhost:8083/repo/validadores/delete/" + id;
+		String uri = jpaUri + "/repo/validadores/delete/" + id;
 		RestTemplate rt = new RestTemplate();
 		Productor result = rt.getForObject(uri, Productor.class);
 		return result;
@@ -105,7 +107,7 @@ public class ValidadorController {
 	@GetMapping("/ficheros/pendientes")
 	public ResponseEntity<List<Fichero>> getFicherosPendientes() {
 
-		String uri = "http://localhost:8080/api/ficheros/pendientes";
+		String uri =  mongoUri + "/api/ficheros/pendientes";
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<List<Fichero>> ficheros = rt.getForObject(uri, ResponseEntity.class);
 		return ficheros;

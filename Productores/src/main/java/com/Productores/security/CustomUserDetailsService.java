@@ -19,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// Hacer peticion al repositorio
-		String uri = "http://localhost:8083/repo/productores/" + email;
+		String uri = "http://jpa-microservice:8080/repo/productores/" + email;
 		RestTemplate rt = new RestTemplate();
 		Productor result = rt.getForObject(uri, Productor.class);
 		if (result != null) {

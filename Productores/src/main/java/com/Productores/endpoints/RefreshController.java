@@ -31,7 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.Productores.security.CustomUserDetailsService;
 
 @RestController
-@RequestMapping("/authenticate/refresh")
+@RequestMapping("/api/authenticate/refresh")
 public class RefreshController {
 
 	private String sysKey = "aSecureKeyGoesHere";
